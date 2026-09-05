@@ -41,7 +41,7 @@ const evidenceImages: EvidenceImage[] = [
 
 const supplementalImages: EvidenceImage[] = [
   {
-    src: "/atelier-elan/about-section/hair-texture-imagegen.png",
+    src: "/atelier-elan/about-section/craft-continuous.png",
     alt: "Expanded close detail of wet hair catching warm light.",
     className: "aspect-[3/4]",
     sizes: "(min-width: 768px) 22vw, 29vw",

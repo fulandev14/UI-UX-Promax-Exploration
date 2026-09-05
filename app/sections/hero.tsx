@@ -50,21 +50,23 @@ export function Hero() {
             <span>Full Attention</span>
           </div>
         </aside>
-
+        
         <div className="absolute inset-y-0 left-0 right-0 bg-[var(--color-ink-950)] md:left-14 lg:left-[5.375rem]">
-          <div className="absolute inset-y-0 right-0 w-full md:w-[66%] lg:w-[58%] xl:w-[55%]">
-            <Image
-              src="/atelier-elan/hero-section/hero-model-reference-crop.png"
-              alt="A client with softly finished dark hair in warm atelier light."
-              fill
-              priority
-              sizes="(min-width: 1440px) 55vw, (min-width: 1024px) 58vw, (min-width: 768px) 66vw, 100vw"
-              className="object-cover object-[0%_42%] md:object-[24%_50%] lg:object-[0%_50%]"
-            />
-          </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--color-ink-950)_0%,rgb(14_14_13_/_0.98)_31%,rgb(14_14_13_/_0.76)_47%,rgb(14_14_13_/_0.12)_66%,transparent_82%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgb(14_14_13_/_0.36)_0%,transparent_34%)]" />
+        <div className="absolute inset-y-0 right-0 w-full md:w-[66%] lg:w-[58%] xl:w-[55%]">
+          <Image
+            src="/atelier-elan/hero-section/hero-model-wide.png"
+            alt="A client with softly finished dark hair in warm atelier light."
+            fill
+            preload
+            unoptimized
+            sizes="(min-width: 1440px) 55vw, (min-width: 1024px) 58vw, (min-width: 768px) 66vw, 100vw"
+            className="object-cover object-center"
+          />
         </div>
+
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--color-ink-950)_0%,rgb(14_14_13_/_0.98)_31%,rgb(14_14_13_/_0.76)_47%,rgb(14_14_13_/_0.12)_66%,transparent_82%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(0deg,rgb(14_14_13_/_0.36)_0%,transparent_34%)]" />
+      </div>
 
         <div className="relative z-10 grid min-h-[calc(100dvh-4rem)] grid-cols-4 px-5 py-10 md:ml-14 md:min-h-[calc(100dvh-5rem)] md:grid-cols-8 md:px-10 md:py-14 lg:ml-[5.375rem] lg:grid-cols-12 lg:px-14 xl:px-16">
           <div className="col-span-4 flex max-w-[46rem] flex-col justify-center pt-8 md:col-span-7 md:pt-3 lg:col-span-6 xl:col-span-5">
