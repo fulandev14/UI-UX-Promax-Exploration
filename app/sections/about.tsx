@@ -1,64 +1,10 @@
 import Image from "next/image";
 
-type EvidenceImage = {
-  src: string;
-  alt: string;
-  className: string;
-  sizes: string;
-  priority?: boolean;
-};
-
 type Principle = {
   number: string;
   title: string;
   copy: string;
 };
-
-const evidenceImages: EvidenceImage[] = [
-  {
-    src: "/atelier-elan/about-section/hair-texture.png",
-    alt: "Close detail of wet hair texture held for observation.",
-    className:
-      "lg:mt-0 lg:h-[82dvh] lg:max-h-[58rem] lg:w-[7rem] min-[90rem]:w-[10rem]",
-    sizes: "(min-width: 1440px) 10rem, (min-width: 1024px) 7rem, 42vw",
-  },
-  {
-    src: "/atelier-elan/about-section/comb-detail.png",
-    alt: "A stylist's hand guides a comb through damp hair.",
-    className:
-      "lg:mt-[3rem] lg:h-[71dvh] lg:max-h-[49rem] lg:w-[8rem] min-[90rem]:w-[11rem]",
-    sizes: "(min-width: 1440px) 11rem, (min-width: 1024px) 8rem, 42vw",
-  },
-  {
-    src: "/atelier-elan/about-section/stylist-profile.png",
-    alt: "A stylist concentrates closely while shaping hair by hand.",
-    className:
-      "lg:mt-[7.25rem] lg:h-[73dvh] lg:max-h-[50rem] lg:w-[12rem] min-[90rem]:w-[15rem]",
-    sizes: "(min-width: 1440px) 15rem, (min-width: 1024px) 12rem, 88vw",
-    priority: true,
-  },
-];
-
-const supplementalImages: EvidenceImage[] = [
-  {
-    src: "/atelier-elan/about-section/craft-continuous.png",
-    alt: "Expanded close detail of wet hair catching warm light.",
-    className: "aspect-[3/4]",
-    sizes: "(min-width: 768px) 22vw, 29vw",
-  },
-  {
-    src: "/atelier-elan/about-section/comb-detail-imagegen.png",
-    alt: "Expanded detail of a comb and hand during hair craft.",
-    className: "aspect-[3/4]",
-    sizes: "(min-width: 768px) 22vw, 29vw",
-  },
-  {
-    src: "/atelier-elan/about-section/stylist-profile-imagegen.png",
-    alt: "Expanded portrait crop of focused hands and stylist attention.",
-    className: "aspect-[3/4]",
-    sizes: "(min-width: 768px) 22vw, 29vw",
-  },
-];
 
 const principles: Principle[] = [
   {
@@ -159,60 +105,16 @@ export function About() {
           </div>
         </div>
 
-        <div className="relative lg:col-span-5 lg:min-h-[calc(100dvh-7rem)]">
-          <div className="hidden h-full items-start justify-end gap-5 lg:flex min-[90rem]:gap-6">
-            {evidenceImages.map((image) => (
-              <figure
-                key={image.src}
-                className={`relative shrink-0 overflow-hidden bg-[var(--color-espresso-800)] ${image.className}`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  priority={image.priority}
-                  sizes={image.sizes}
-                  className="object-cover"
-                />
-              </figure>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-3 gap-3 lg:hidden">
-            {evidenceImages.map((image, index) => (
-              <figure
-                key={image.src}
-                className={`relative overflow-hidden bg-[var(--color-espresso-800)] ${
-                  index === 2 ? "aspect-[3/4]" : "aspect-[2/5]"
-                }`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="33vw"
-                  className="object-cover"
-                />
-              </figure>
-            ))}
-          </div>
-
-          <div className="mt-3 grid grid-cols-3 gap-3 lg:hidden">
-            {supplementalImages.map((image) => (
-              <figure
-                key={image.src}
-                className={`relative overflow-hidden bg-[var(--color-espresso-800)] ${image.className}`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes={image.sizes}
-                  className="object-cover"
-                />
-              </figure>
-            ))}
-          </div>
+        <div className="relative lg:col-span-5 lg:flex lg:min-h-[calc(100dvh-7rem)] lg:items-center lg:justify-end">
+          <figure className="relative mx-auto aspect-[1190/1322] w-full overflow-hidden bg-[var(--color-espresso-800)] sm:max-w-[38rem] lg:mx-0 lg:w-[min(100%,42rem)] min-[90rem]:w-[min(100%,46rem)]">
+            <Image
+              src="/atelier-elan/about-section/craft-continuous.png"
+              alt="A stylist studies wet hair with a comb during a precise consultation."
+              fill
+              sizes="(min-width: 1440px) 41vw, (min-width: 1024px) 39vw, (min-width: 640px) 38rem, 100vw"
+              className="object-cover object-center"
+            />
+          </figure>
         </div>
       </div>
     </section>

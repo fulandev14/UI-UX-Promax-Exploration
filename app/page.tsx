@@ -3,6 +3,7 @@ import { About } from "./sections/about";
 import { Service } from "./sections/service";
 import { Craftsmanship } from "./sections/craftsmanship";
 import { Experience } from "./sections/experience";
+import { Gallery } from "./sections/gallery";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Service />
       <Craftsmanship />
       <Experience />
+      <Gallery />
     </main>
   );
 }
