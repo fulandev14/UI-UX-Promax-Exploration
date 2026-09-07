@@ -2,6 +2,7 @@ import { Hero } from "./sections/hero";
 import { About } from "./sections/about";
 import { Service } from "./sections/service";
 import { Craftsmanship } from "./sections/craftsmanship";
+import { Experience } from "./sections/experience";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <About />
       <Service />
       <Craftsmanship />
+      <Experience />
     </main>
   );
 }
