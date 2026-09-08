@@ -5,6 +5,8 @@ import { Craftsmanship } from "./sections/craftsmanship";
 import { Experience } from "./sections/experience";
 import { Gallery } from "./sections/gallery";
 import { Testimonial } from "./sections/testimonial";
+import { Booking } from "./sections/booking";
+import { Footer } from "./sections/footer";
 
 export default function Home() {
   return (
@@ -22,6 +24,8 @@ export default function Home() {
       <Experience />
       <Gallery />
       <Testimonial />
+      <Booking />
+      <Footer />
     </main>
   );
 }
