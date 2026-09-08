@@ -5,8 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 type TestimonialVisual = {
-  desktopSrc: string;
-  mobileSrc: string;
+  src: string;
   alt: string;
   imageClassName: string;
 };
@@ -21,24 +20,27 @@ type TestimonialVoice = {
 };
 
 const claraVisual: TestimonialVisual = {
-  desktopSrc: "/atelier-elan/testimonial-section/testimonial-d-client-portrait-4k.jpg",
-  mobileSrc: "/atelier-elan/testimonial-section/testimonial-d-client-portrait.png",
-  alt: "Clara seated beside a mirror after a considered salon consultation.",
-  imageClassName: "object-[52%_42%]",
+  src: "/atelier-elan/testimonial-section/testimonial-clara-over-shoulder.png",
+  alt: "Clara looks back over her shoulder after her salon consultation.",
+  imageClassName: "object-[48%_42%]",
 };
 
-const maraWideVisual: TestimonialVisual = {
-  desktopSrc: "/atelier-elan/testimonial-section/testimonial-e-dark-background-4k.jpg",
-  mobileSrc: "/atelier-elan/testimonial-section/testimonial-e-dark-background-mobile-4k.jpg",
-  alt: "Mara smiling at her reflection in a dark private atelier mirror.",
-  imageClassName: "object-[67%_50%]",
+const maraVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-mara-hair-detail.png",
+  alt: "Mara studies the movement at the ends of her finished hair.",
+  imageClassName: "object-[45%_42%]",
 };
 
-const maraCompactVisual: TestimonialVisual = {
-  desktopSrc: "/atelier-elan/testimonial-section/testimonial-e-dark-background.png",
-  mobileSrc: "/atelier-elan/testimonial-section/testimonial-e-dark-background-mobile.png",
-  alt: "A client studies her finished hair in a quiet mirror reflection.",
-  imageClassName: "object-[66%_50%]",
+const jessVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-jess-relaxed.png",
+  alt: "Jess relaxes with one hand beneath her newly shaped hair.",
+  imageClassName: "object-[55%_42%]",
+};
+
+const noaVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-noa-hair-over-shoulder.png",
+  alt: "Noa gathers her layered hair over one shoulder in the atelier.",
+  imageClassName: "object-[50%_42%]",
 };
 
 const testimonialVoices: TestimonialVoice[] = [
@@ -58,7 +60,7 @@ const testimonialVoices: TestimonialVoice[] = [
       "I recognised myself immediately--only lighter, more considered, and completely at ease.",
     client: "Mara S. -- Colour Client",
     service: "Dimensional Colour / First Visit",
-    visual: maraWideVisual,
+    visual: maraVisual,
   },
   {
     number: "09",
@@ -67,7 +69,7 @@ const testimonialVoices: TestimonialVoice[] = [
       "Soft movement, better texture, and a shape that grows out beautifully.",
     client: "Jess L. -- Atelier Client",
     service: "Lived-In Blend / Signature Cut",
-    visual: claraVisual,
+    visual: jessVisual,
   },
   {
     number: "10",
@@ -76,36 +78,26 @@ const testimonialVoices: TestimonialVoice[] = [
       "The result felt refined without feeling unfamiliar. I left with ease I could actually keep.",
     client: "Noa R. -- Returning Client",
     service: "Refinement / Seasonal Shape",
-    visual: maraCompactVisual,
+    visual: noaVisual,
   },
 ];
 
 function ResponsiveImage({
   visual,
-  priority = false,
+  preload = false,
 }: {
   visual: TestimonialVisual;
-  priority?: boolean;
+  preload?: boolean;
 }) {
   return (
-    <>
-      <Image
-        src={visual.mobileSrc}
-        alt={visual.alt}
-        fill
-        priority={priority}
-        sizes="(min-width: 1024px) 0px, 100vw"
-        className={`object-cover lg:hidden ${visual.imageClassName}`}
-      />
-      <Image
-        src={visual.desktopSrc}
-        alt={visual.alt}
-        fill
-        priority={priority}
-        sizes="(min-width: 1536px) 31vw, (min-width: 1280px) 30vw, (min-width: 1024px) 29vw, 0px"
-        className={`hidden object-cover lg:block ${visual.imageClassName}`}
-      />
-    </>
+    <Image
+      src={visual.src}
+      alt={visual.alt}
+      fill
+      preload={preload}
+      sizes="(min-width: 1536px) 31vw, (min-width: 1280px) 30vw, (min-width: 1024px) 29vw, 100vw"
+      className={`object-cover ${visual.imageClassName}`}
+    />
   );
 }
 
@@ -176,7 +168,7 @@ export function Testimonial() {
           data-testimonial-panel="active-image"
           className="relative order-1 aspect-[0.75/1] overflow-hidden bg-[var(--color-espresso-800)] sm:aspect-[0.86/1] md:max-h-[44rem] lg:order-none lg:my-[7.4vh] lg:aspect-auto lg:h-[85.2vh] lg:max-h-none"
         >
-          <ResponsiveImage visual={activeVoice.visual} priority />
+          <ResponsiveImage visual={activeVoice.visual} preload />
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgb(14_14_13_/_0.16)_100%)]"
@@ -194,7 +186,7 @@ export function Testimonial() {
           <h2
             id="testimonial-title"
             aria-live="polite"
-            className="mt-7 max-w-[12ch] font-sans text-[3.35rem] font-black uppercase leading-[0.86] tracking-normal text-[var(--color-ink-950)] sm:text-[4.55rem] md:max-w-[14ch] md:text-[5.25rem] lg:mt-8 lg:max-w-none lg:text-[3.8rem] xl:text-[4.45rem] 2xl:text-[4.95rem]"
+            className="mt-7 max-w-[12ch] font-sans text-[2.35rem] font-black uppercase leading-[0.86] tracking-normal text-[var(--color-ink-950)] sm:text-[4.55rem] md:max-w-[14ch] md:text-[3.25rem] lg:mt-8 lg:max-w-none lg:text-[1.8rem] xl:text-[2.45rem] 2xl:text-[2.95rem]"
           >
             <span className="block">{activeVoice.titleLines[0]}</span>
             <span className="block">{activeVoice.titleLines[1]}</span>
@@ -203,7 +195,7 @@ export function Testimonial() {
           <figure className="mt-7 md:mt-9 lg:mt-7">
             <blockquote
               key={activeVoice.quote}
-              className="max-w-[18ch] font-serif text-[2.25rem] italic leading-[1.05] tracking-normal text-[var(--color-ink-950)] sm:text-[2.95rem] md:max-w-[19ch] md:text-[3.45rem] lg:max-w-[20ch] lg:text-[2.25rem] xl:text-[2.72rem] 2xl:text-[3.05rem]"
+              className="max-w-[18ch] font-serif text-[1.25rem] italic leading-[1.05] tracking-normal text-[var(--color-ink-950)] sm:text-[1.95rem] md:max-w-[19ch] md:text-[2.45rem] lg:max-w-[20ch] lg:text-[1.25rem] xl:text-[1.72rem] 2xl:text-[3.05rem]"
             >
               <span aria-hidden="true">&ldquo;</span>
               {activeVoice.quote}

@@ -64,10 +64,10 @@ export function Booking() {
             <div className="mt-18 max-w-[44rem] sm:mt-20 md:mt-24 lg:mt-[15vh] lg:max-w-[58rem]">
               <h2
                 id="booking-title"
-                className="font-sans text-[3.35rem] font-black uppercase leading-[0.82] tracking-normal text-[var(--text-inverse)] sm:text-[6rem] md:text-[7.5rem] lg:text-[6.5rem] xl:text-[8.1rem] 2xl:text-[9.5rem]"
+                className="font-sans text-[3.35rem] font-black uppercase leading-[0.82] tracking-normal text-[var(--text-inverse)] sm:text-[6rem] md:text-[7.5rem] lg:text-[8.5rem] xl:text-[7.1rem] 2xl:text-[9.5rem]"
               >
                 <span className="block">When You&apos;re</span>
-                <span className="mt-1 block font-serif text-[4.45rem] font-normal italic leading-[0.78] normal-case sm:text-[7.5rem] md:text-[9.4rem] lg:text-[8.3rem] xl:text-[10.8rem] 2xl:text-[12.8rem]">
+                <span className="mt-1 block font-serif text-[4.45rem] font-normal italic leading-[0.78] normal-case sm:text-[7.5rem] md:text-[9.4rem] lg:text-[8.3rem] xl:text-[6.8rem] 2xl:text-[8.8rem]">
                   Ready.
                 </span>
               </h2>

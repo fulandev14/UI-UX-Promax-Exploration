@@ -108,7 +108,7 @@ export function About() {
         <div className="relative lg:col-span-5 lg:flex lg:min-h-[calc(100dvh-7rem)] lg:items-center lg:justify-end">
           <figure className="relative mx-auto aspect-[1190/1322] w-full overflow-hidden bg-[var(--color-espresso-800)] sm:max-w-[38rem] lg:mx-0 lg:w-[min(100%,42rem)] min-[90rem]:w-[min(100%,46rem)]">
             <Image
-              src="/atelier-elan/about-section/craft-continuous.png"
+              src="/atelier-elan/about-section/hair-cut.png"
               alt="A stylist studies wet hair with a comb during a precise consultation."
               fill
               sizes="(min-width: 1440px) 41vw, (min-width: 1024px) 39vw, (min-width: 640px) 38rem, 100vw"

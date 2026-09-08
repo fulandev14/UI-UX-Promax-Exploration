@@ -1,7 +1,13 @@
 import Image from "next/image";
 import { ArrowDown, ArrowRight } from "lucide-react";
 
-const navItems = ["About", "Services", "Artistry", "Journal", "Studio"];
+const navItems = [
+  { label: "About", href: "#about"},
+  { label: "Services", href: "#services"},
+  { label: "Experience", href: "#studio" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Booking", href: "#booking" },
+];
 
 export function Hero() {
   return (
@@ -23,11 +29,11 @@ export function Hero() {
         >
           {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+              key={item.href}
+              href={item.href}
               className="outline-none transition-colors duration-200 hover:text-[var(--text-muted)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)]"
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>
@@ -54,7 +60,7 @@ export function Hero() {
         <div className="absolute inset-y-0 left-0 right-0 bg-[var(--color-ink-950)] md:left-14 lg:left-[5.375rem]">
         <div className="absolute inset-y-0 right-0 w-full md:w-[66%] lg:w-[58%] xl:w-[55%]">
           <Image
-            src="/atelier-elan/hero-section/hero-model-wide.png"
+            src="/atelier-elan/hero-section/hero-model-landscape.png"
             alt="A client with softly finished dark hair in warm atelier light."
             fill
             preload
@@ -115,16 +121,7 @@ export function Hero() {
                 </div>
               </div>
 
-              <figure className="mt-8 hidden aspect-[8/5] overflow-hidden border border-[rgb(251_248_241_/_0.72)] bg-[var(--color-espresso-800)] lg:mt-0 lg:block">
-                <Image
-                  src="/atelier-elan/hero-section/hero-craft-detail.png"
-                  alt="Hands guide scissors and comb through damp hair during a precise cut."
-                  width={900}
-                  height={675}
-                  sizes="(min-width: 1440px) 21rem, 19rem"
-                  className="h-full w-full object-cover object-[48%_48%]"
-                />
-              </figure>
+              
             </div>
           </div>
         </div>

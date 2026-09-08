@@ -134,16 +134,6 @@ export function Service() {
               of Care.
             </span>
           </h3>
-
-          <figure className="absolute bottom-[7%] left-5 z-10 aspect-[0.34] w-[28%] max-w-[10rem] overflow-hidden bg-[var(--color-espresso-800)] sm:left-10 sm:w-[25%] sm:max-w-[12rem] lg:bottom-auto lg:left-0 lg:top-[29%] lg:aspect-[0.28] lg:w-[clamp(6.5rem,10.2vw,10rem)] lg:max-w-none lg:-translate-x-[60%]">
-            <Image
-              src="/atelier-elan/service-section/hair-part-detail.png"
-              alt="Close detail of a precise section through wet dark hair."
-              fill
-              sizes="(min-width: 1024px) 10vw, 28vw"
-              className="object-cover"
-            />
-          </figure>
         </div>
       </div>
     </section>

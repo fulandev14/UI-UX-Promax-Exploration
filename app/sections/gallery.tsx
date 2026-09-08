@@ -5,46 +5,41 @@ type GalleryFrame = {
   src: string;
   alt: string;
   frameClassName: string;
-  imageClassName: string;
   sizes: string;
 };
 
 const galleryFrames: GalleryFrame[] = [
   {
     number: "01",
-    src: "/atelier-elan/gallery-section/model-01.png",
+    src: "/atelier-elan/gallery-section/model-01-hd.png",
     alt: "A woman in cream fabric with warm light falling across her hair.",
     frameClassName:
-      "h-[24rem] w-[13rem] md:h-[29rem] md:w-[15rem] lg:h-[31rem] lg:w-[15.25rem] xl:h-[35rem] xl:w-[17rem]",
-    imageClassName: "object-[58%_50%]",
-    sizes: "(min-width: 1280px) 17rem, (min-width: 1024px) 15.25rem, (min-width: 768px) 15rem, 100vw",
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
   },
   {
     number: "02",
-    src: "/atelier-elan/gallery-section/model-02.png",
+    src: "/atelier-elan/gallery-section/model-02-hd.png",
     alt: "A quiet profile portrait showing soft dark hair and natural texture.",
     frameClassName:
-      "h-[24rem] w-[15rem] md:h-[29rem] md:w-[18rem] lg:h-[31rem] lg:w-[18.75rem] xl:h-[35rem] xl:w-[21rem]",
-    imageClassName: "object-[42%_50%]",
-    sizes: "(min-width: 1280px) 21rem, (min-width: 1024px) 18.75rem, (min-width: 768px) 18rem, 100vw",
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
   },
   {
     number: "03",
-    src: "/atelier-elan/gallery-section/model-03.png",
+    src: "/atelier-elan/gallery-section/model-03-hd.png",
     alt: "A close editorial portrait with short textured hair and direct gaze.",
     frameClassName:
-      "h-[24rem] w-[19rem] md:h-[29rem] md:w-[24rem] lg:h-[31rem] lg:w-[25rem] xl:h-[35rem] xl:w-[28rem]",
-    imageClassName: "object-[50%_38%]",
-    sizes: "(min-width: 1280px) 28rem, (min-width: 1024px) 25rem, (min-width: 768px) 24rem, 100vw",
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
   },
   {
     number: "04",
-    src: "/atelier-elan/gallery-section/model-04.png",
+    src: "/atelier-elan/gallery-section/model-04-hd.png",
     alt: "A blonde client portrait framed by loose textured hair.",
     frameClassName:
-      "mt-16 h-[18rem] w-[9rem] md:h-[21rem] md:w-[10rem] lg:h-[22rem] lg:w-[10.5rem] xl:h-[25rem] xl:w-[12rem]",
-    imageClassName: "object-[52%_44%]",
-    sizes: "(min-width: 1280px) 12rem, (min-width: 1024px) 10.5rem, (min-width: 768px) 10rem, 78vw",
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
   },
 ];
 
@@ -123,7 +118,7 @@ export function Gallery() {
                       alt={frame.alt}
                       fill
                       sizes={frame.sizes}
-                      className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025] ${frame.imageClassName}`}
+                      className="object-contain transition-[filter] duration-500 ease-out group-hover:brightness-105"
                     />
                     <div
                       aria-hidden="true"
@@ -143,7 +138,7 @@ export function Gallery() {
                 </p>
                 <figure className="relative h-[22rem] w-[10.5rem] overflow-hidden bg-[var(--color-stone-300)] xl:h-[25rem] xl:w-[12rem]">
                   <Image
-                    src="/atelier-elan/about-section/hair-texture.png"
+                    src="/atelier-elan/gallery-section/hair-showing-03.png"
                     alt="Close detail of hair texture catching a narrow line of light."
                     fill
                     sizes="(min-width: 1280px) 12rem, 10.5rem"
@@ -178,10 +173,6 @@ export function Gallery() {
               </li>
             </ol>
 
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute left-0 right-0 top-[76vh] z-20 h-[2px] bg-[var(--accent-primary)]"
-            />
           </div>
 
           <ol className="relative z-10 grid gap-8 px-5 py-14 sm:px-8 md:grid-cols-2 md:px-10 lg:hidden">
@@ -194,13 +185,13 @@ export function Gallery() {
                     className="h-px w-6 bg-[rgb(251_248_241_/_0.72)]"
                   />
                 </p>
-                <figure className="relative aspect-[4/5] overflow-hidden bg-[var(--color-espresso-800)]">
+                <figure className="relative aspect-[2/3] overflow-hidden bg-[var(--color-espresso-800)]">
                   <Image
                     src={frame.src}
                     alt={frame.alt}
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className={`object-cover ${frame.imageClassName}`}
+                    className="object-contain"
                   />
                 </figure>
               </li>

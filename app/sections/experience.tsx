@@ -38,14 +38,14 @@ export function Experience() {
     >
       <div aria-hidden="true" className="absolute inset-0 z-0">
         <Image
-          src="/atelier-elan/experience-section/experience-background-mobile-4k.jpg"
+          src="/atelier-elan/experience-section/experience-background-mobile.png"
           alt=""
           fill
           sizes="100vw"
           className="object-cover object-[54%_center] lg:hidden"
         />
         <Image
-          src="/atelier-elan/experience-section/experience-background-large-4k.jpg"
+          src="/atelier-elan/experience-section/experience-model-a-large.png"
           alt=""
           fill
           sizes="100vw"
