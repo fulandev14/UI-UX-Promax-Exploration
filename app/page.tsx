@@ -4,6 +4,7 @@ import { Service } from "./sections/service";
 import { Craftsmanship } from "./sections/craftsmanship";
 import { Experience } from "./sections/experience";
 import { Gallery } from "./sections/gallery";
+import { Testimonial } from "./sections/testimonial";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Craftsmanship />
       <Experience />
       <Gallery />
+      <Testimonial />
     </main>
   );
 }
