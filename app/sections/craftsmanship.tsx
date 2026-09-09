@@ -1,75 +1,27 @@
 import Image from "next/image";
-
-type CraftStep = {
-  number: string;
-  title: string;
-  description: string;
-  src: string;
-  alt: string;
-  imageClassName: string;
-  figureClassName: string;
-};
-
-const craftSteps: CraftStep[] = [
-  {
-    number: "01",
-    title: "Consult",
-    description: "We observe movement, texture, and daily rhythm.",
-    src: "/atelier-elan/craftsmanship/consult.png",
-    alt: "A stylist studies the client's hair before beginning the service.",
-    imageClassName: "object-[50%_48%]",
-    figureClassName: "aspect-[1.12/1]",
-  },
-  {
-    number: "02",
-    title: "Section",
-    description: "Structure gives every decision a reason.",
-    src: "/atelier-elan/craftsmanship/section.png",
-    alt: "A close view of wet hair being separated with a comb.",
-    imageClassName: "object-center",
-    figureClassName: "aspect-[0.65/1]",
-  },
-  {
-    number: "03",
-    title: "Shape",
-    description: "The hand responds to weight, fall, and balance.",
-    src: "/atelier-elan/craftsmanship/shape.png",
-    alt: "A stylist's hands guide a comb through wet hair with precision.",
-    imageClassName: "object-center",
-    figureClassName: "aspect-[1.75/1]",
-  },
-  {
-    number: "04",
-    title: "Refine",
-    description: "The cut is judged only after the hair moves naturally.",
-    src: "/atelier-elan/craftsmanship/refine.png",
-    alt: "The stylist assesses the final movement and shape of the hair.",
-    imageClassName: "object-[50%_38%]",
-    figureClassName: "aspect-[0.9/1]",
-  },
-];
+import { SectionKicker } from "../components/atelier/section-kicker";
+import { craftSteps } from "../data/atelier-content";
 
 export function Craftsmanship() {
   return (
     <section
       id="artistry"
+      data-section-id="artistry"
       aria-labelledby="craftsmanship-title"
       className="relative overflow-hidden bg-[var(--background-primary)] px-5 py-16 text-[var(--text-primary)] sm:px-8 md:px-10 md:py-20 lg:min-h-dvh lg:px-[clamp(3rem,3.2vw,4rem)] lg:py-[clamp(3rem,5vh,4.25rem)]"
     >
       <div className="mx-auto flex min-h-full max-w-[112rem] flex-col">
-        <p className="font-mono text-xs font-medium uppercase leading-none tracking-[0.13em] md:text-sm">
-          03&nbsp;&nbsp;-&nbsp;&nbsp;Craft in Practice
-        </p>
+        <SectionKicker number="03">Craft in Practice</SectionKicker>
 
         <div className="mt-11 grid gap-8 lg:mt-[clamp(1rem,2vh,2rem)] lg:grid-cols-12 lg:items-end lg:gap-6">
           <h2
             id="craftsmanship-title"
             className="lg:col-span-11 lg:flex lg:items-end"
           >
-            <span className="block w-max origin-left scale-x-[0.58] whitespace-nowrap font-sans text-[clamp(4.75rem,20vw,8rem)] font-black uppercase leading-[0.8] tracking-[-0.055em] text-[var(--color-ink-950)] sm:scale-x-[0.7] lg:scale-x-[0.59] lg:text-[clamp(8rem,9.5vw,10rem)]">
+            <span className="block w-max origin-left scale-x-[0.58] whitespace-nowrap font-sans text-[clamp(4.75rem,20vw,8rem)] font-black uppercase leading-[0.8] tracking-normal text-[var(--color-ink-950)] sm:scale-x-[0.7] lg:scale-x-[0.59] lg:text-[clamp(8rem,9.5vw,10rem)]">
               Precision,
             </span>
-            <span className="-mt-1 block w-max origin-left scale-x-[0.85] whitespace-nowrap font-serif text-[clamp(4rem,17vw,7rem)] font-normal italic leading-[0.86] tracking-[-0.04em] text-[var(--color-ink-950)] sm:scale-x-[0.95] lg:-ml-[20%] lg:mt-0 lg:scale-x-[1.12] lg:text-[clamp(7rem,8.8vw,9.5rem)]">
+            <span className="-mt-1 block w-max origin-left scale-x-[0.85] whitespace-nowrap font-serif text-[clamp(4rem,17vw,7rem)] font-normal italic leading-[0.86] tracking-normal text-[var(--color-ink-950)] sm:scale-x-[0.95] lg:-ml-[20%] lg:mt-0 lg:scale-x-[1.12] lg:text-[clamp(7rem,8.8vw,9.5rem)]">
               In Motion.
             </span>
           </h2>
@@ -94,7 +46,7 @@ export function Craftsmanship() {
                 />
                 <span
                   aria-hidden="true"
-                  className="absolute -left-3 -top-[0.62em] z-10 font-serif text-[clamp(4.75rem,12vw,7.25rem)] leading-none tracking-[-0.06em] text-[var(--color-ink-950)] sm:-left-5 xl:text-[clamp(5.5rem,6.5vw,7.5rem)]"
+                  className="absolute -left-3 -top-[0.62em] z-10 font-serif text-[clamp(4.75rem,12vw,7.25rem)] leading-none tracking-normal text-[var(--color-ink-950)] sm:-left-5 xl:text-[clamp(5.5rem,6.5vw,7.5rem)]"
                 >
                   {step.number}
                 </span>

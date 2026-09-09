@@ -1,63 +1,24 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-
-type ServiceItem = {
-  number: string;
-  title: string;
-  description: string;
-  price: string;
-};
-
-const services: ServiceItem[] = [
-  {
-    number: "01",
-    title: "Signature Cut",
-    description: "Precision shaped around movement.",
-    price: "$165",
-  },
-  {
-    number: "02",
-    title: "Dimensional Color",
-    description: "Tone and depth, designed to endure.",
-    price: "$225",
-  },
-  {
-    number: "03",
-    title: "Scalp Ritual",
-    description: "Restorative care at the source.",
-    price: "$120",
-  },
-  {
-    number: "04",
-    title: "Hair Renewal",
-    description: "Strength, repair, and softness.",
-    price: "$145",
-  },
-  {
-    number: "05",
-    title: "Finishing Edit",
-    description: "The final line, refined in motion.",
-    price: "$95",
-  },
-];
+import { ArrowLink } from "../components/atelier/arrow-link";
+import { SectionKicker } from "../components/atelier/section-kicker";
+import { services } from "../data/atelier-content";
 
 export function Service() {
   return (
     <section
       id="services"
+      data-section-id="services"
       aria-labelledby="services-title"
       className="relative isolate overflow-hidden bg-[var(--background-primary)] text-[var(--text-primary)]"
     >
       <div className="grid lg:min-h-dvh lg:grid-cols-[53%_47%]">
         <div className="relative z-10 flex flex-col px-5 py-16 sm:px-8 md:px-10 md:py-20 lg:px-[clamp(2.5rem,3vw,4rem)] lg:py-[clamp(2.5rem,4.2vh,4rem)]">
-          <p className="font-mono text-xs font-medium uppercase leading-none tracking-[0.13em] md:text-sm">
-            02&nbsp;&nbsp;-&nbsp;&nbsp;Signature Services
-          </p>
+          <SectionKicker number="02">Signature Services</SectionKicker>
 
           <div className="mt-10 md:mt-12 lg:mt-[clamp(2.5rem,4.8vh,4.5rem)]">
             <h2
               id="services-title"
-              className="font-sans text-[clamp(3.6rem,12.5vw,7rem)] font-black uppercase leading-[0.84] tracking-[-0.045em] text-[var(--color-ink-950)] lg:text-[clamp(4.25rem,5.2vw,6.5rem)]"
+              className="font-sans text-[clamp(3.6rem,12.5vw,7rem)] font-black uppercase leading-[0.84] tracking-normal text-[var(--color-ink-950)] lg:text-[clamp(4.25rem,5.2vw,6.5rem)]"
             >
               <span className="block w-max origin-left scale-x-[0.48] whitespace-nowrap sm:scale-x-[0.58] lg:scale-x-[0.78]">
                 The Craft of Care.
@@ -80,7 +41,7 @@ export function Service() {
                   index === 0 ? "pt-0" : "border-t border-[var(--border-subtle)]"
                 }`}
               >
-                <span className="row-span-2 font-serif text-[3.5rem] leading-[0.82] tracking-[-0.04em] text-[var(--color-espresso-800)] sm:row-span-1 sm:text-[4.75rem] md:text-[5.4rem] lg:text-[clamp(4rem,5vw,5.5rem)]">
+                <span className="row-span-2 font-serif text-[3.5rem] leading-[0.82] tracking-normal text-[var(--color-espresso-800)] sm:row-span-1 sm:text-[4.75rem] md:text-[5.4rem] lg:text-[clamp(4rem,5vw,5.5rem)]">
                   {service.number}
                 </span>
 
@@ -101,13 +62,13 @@ export function Service() {
           </ol>
 
           <div className="mt-2 lg:mt-auto lg:pt-5">
-            <a
+            <ArrowLink
               href="#booking"
-              className="inline-flex min-h-11 w-full max-w-[20.5rem] items-center justify-between border-b border-[var(--border-strong)] font-mono text-xs font-medium uppercase tracking-[0.09em] outline-none transition-colors duration-200 hover:text-[var(--text-muted)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)] md:text-sm"
+              className="min-h-11 w-full max-w-[20.5rem] justify-between border-b border-[var(--border-strong)] md:text-sm"
+              iconClassName="size-5 stroke-[1.35]"
             >
               Discover the full service edit
-              <ArrowRight aria-hidden="true" className="size-5 stroke-[1.35]" />
-            </a>
+            </ArrowLink>
             <p className="mt-8 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-[var(--color-charcoal-900)] md:text-xs lg:mt-9">
               Craft / Ritual / Result
             </p>
@@ -127,10 +88,10 @@ export function Service() {
           </div>
 
           <h3 className="absolute left-[10%] top-[7%] z-10 text-[var(--text-inverse)] lg:left-[11%] lg:top-[8%]">
-            <span className="block w-max origin-left scale-x-[0.72] whitespace-nowrap font-sans text-[clamp(4.6rem,13vw,8rem)] font-black uppercase leading-[0.8] tracking-[-0.05em] lg:scale-x-[0.58] lg:text-[clamp(6.5rem,8.5vw,10.5rem)] lg:leading-[0.86]">
+            <span className="block w-max origin-left scale-x-[0.72] whitespace-nowrap font-sans text-[clamp(4.6rem,13vw,8rem)] font-black uppercase leading-[0.8] tracking-normal lg:scale-x-[0.58] lg:text-[clamp(6.5rem,8.5vw,10.5rem)] lg:leading-[0.86]">
               The Craft
             </span>
-            <span className="mt-2 block w-max origin-left scale-x-[0.84] whitespace-nowrap font-serif text-[clamp(4.1rem,12vw,7.5rem)] font-normal italic leading-[0.82] tracking-[-0.04em] lg:mt-4 lg:scale-x-[1.35] lg:text-[clamp(6.25rem,8.2vw,10rem)]">
+            <span className="mt-2 block w-max origin-left scale-x-[0.84] whitespace-nowrap font-serif text-[clamp(4.1rem,12vw,7.5rem)] font-normal italic leading-[0.82] tracking-normal lg:mt-4 lg:scale-x-[1.35] lg:text-[clamp(6.25rem,8.2vw,10rem)]">
               of Care.
             </span>
           </h3>

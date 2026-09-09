@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { SectionKicker } from "../components/atelier/section-kicker";
 
 export function Booking() {
   return (
     <section
       id="booking"
+      data-section-id="booking"
       aria-labelledby="booking-title"
       className="relative isolate overflow-hidden bg-[var(--background-inverse)] text-[var(--text-inverse)]"
     >
@@ -57,11 +59,11 @@ export function Booking() {
           </span>
 
           <div className="relative z-10 flex min-h-full flex-col">
-            <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.9)] md:text-sm">
-              09&nbsp;&nbsp;-&nbsp;&nbsp;The Next Chapter
-            </p>
+            <SectionKicker number="09" tone="light" className="tracking-normal opacity-90">
+              The Next Chapter
+            </SectionKicker>
 
-            <div className="mt-18 max-w-[44rem] sm:mt-20 md:mt-24 lg:mt-[15vh] lg:max-w-[58rem]">
+            <div className="mt-16 max-w-[44rem] sm:mt-20 md:mt-24 lg:mt-[15vh] lg:max-w-[58rem]">
               <h2
                 id="booking-title"
                 className="font-sans text-[3.35rem] font-black uppercase leading-[0.82] tracking-normal text-[var(--text-inverse)] sm:text-[6rem] md:text-[7.5rem] lg:text-[8.5rem] xl:text-[7.1rem] 2xl:text-[9.5rem]"

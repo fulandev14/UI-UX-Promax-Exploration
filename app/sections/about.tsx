@@ -1,41 +1,19 @@
 import Image from "next/image";
-
-type Principle = {
-  number: string;
-  title: string;
-  copy: string;
-};
-
-const principles: Principle[] = [
-  {
-    number: "01",
-    title: "Listen",
-    copy: "Presence before prescription.",
-  },
-  {
-    number: "02",
-    title: "Refine",
-    copy: "Technique shaped to the individual.",
-  },
-  {
-    number: "03",
-    title: "Endure",
-    copy: "Care designed to live well.",
-  },
-];
+import { NumberedRule } from "../components/atelier/numbered-rule";
+import { SectionKicker } from "../components/atelier/section-kicker";
+import { principles } from "../data/atelier-content";
 
 export function About() {
   return (
     <section
       id="about"
+      data-section-id="about"
       aria-labelledby="about-title"
       className="relative overflow-hidden bg-[var(--background-primary)] px-5 py-16 text-[var(--text-primary)] md:px-10 md:py-20 lg:min-h-dvh lg:px-16 lg:py-14 min-[90rem]:px-20"
     >
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-8 min-[90rem]:gap-10">
         <div className="relative z-10 flex min-h-full flex-col lg:col-span-7">
-          <div className="font-mono text-sm uppercase leading-none tracking-[0.08em] md:text-base">
-            01&nbsp;&nbsp;-&nbsp;&nbsp;Our Philosophy
-          </div>
+          <SectionKicker number="01" className="tracking-[0.08em] md:text-base">Our Philosophy</SectionKicker>
           <div
             aria-hidden="true"
             className="mt-7 size-4 bg-[var(--accent-primary)] md:size-5"
@@ -81,12 +59,12 @@ export function About() {
                 key={principle.number}
                 className="grid grid-cols-[4.25rem_minmax(0,1fr)] items-start gap-4 md:grid-cols-[5rem_minmax(0,1fr)] lg:grid-cols-[5rem_minmax(6rem,1fr)_minmax(12rem,19rem)]"
               >
-                <div className="font-serif text-[3rem] leading-none text-[var(--text-primary)] md:text-[4rem]">
-                  {principle.number}
-                </div>
-                <div
-                  aria-hidden="true"
-                  className="mt-7 h-px bg-[var(--border-subtle)] after:float-right after:-mt-1 after:size-1 after:rounded-full after:bg-[var(--text-muted)] after:content-[''] md:mt-9"
+                <NumberedRule
+                  number={principle.number}
+                  numberClassName="font-serif text-[3rem] leading-none text-[var(--text-primary)] md:text-[4rem]"
+                  lineClassName="mt-7 h-px bg-[var(--border-subtle)] md:mt-9"
+                  className="col-span-2 grid-cols-[4.25rem_minmax(0,1fr)] md:grid-cols-[5rem_minmax(0,1fr)] lg:grid-cols-[5rem_minmax(6rem,1fr)]"
+                  withDot
                 />
                 <div className="col-start-2 pt-1.5 lg:col-start-auto">
                   <h3 className="font-mono text-sm font-medium uppercase leading-none tracking-[0.14em] text-[var(--text-primary)] md:text-base">

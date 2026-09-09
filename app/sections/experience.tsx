@@ -1,38 +1,13 @@
 import Image from "next/image";
-
-type ExperienceStep = {
-  number: string;
-  title: string;
-  description: string;
-};
-
-const experienceSteps: ExperienceStep[] = [
-  {
-    number: "01",
-    title: "Threshold",
-    description: "Leave the noise outside.",
-  },
-  {
-    number: "02",
-    title: "Consultation",
-    description: "Seen before shaped.",
-  },
-  {
-    number: "03",
-    title: "Ritual",
-    description: "Time, touch, and considered care.",
-  },
-  {
-    number: "04",
-    title: "Return",
-    description: "A result that still feels like you.",
-  },
-];
+import { NumberedRule } from "../components/atelier/numbered-rule";
+import { SectionKicker } from "../components/atelier/section-kicker";
+import { experienceSteps } from "../data/atelier-content";
 
 export function Experience() {
   return (
     <section
       id="studio"
+      data-section-id="studio"
       aria-labelledby="experience-title"
       className="relative isolate min-h-[56rem] overflow-hidden bg-[var(--background-inverse)] text-[var(--text-inverse)] sm:min-h-[62rem] lg:min-h-dvh"
     >
@@ -63,9 +38,7 @@ export function Experience() {
       />
 
       <div className="relative z-10 flex min-h-[56rem] flex-col px-5 py-12 sm:min-h-[62rem] sm:px-8 md:px-10 md:py-16 lg:min-h-dvh lg:px-[clamp(3rem,4.6vw,5rem)] lg:py-[clamp(3rem,5vh,4.5rem)]">
-        <p className="font-mono text-xs font-medium uppercase leading-none tracking-[0.13em] text-[var(--text-inverse)] md:text-sm">
-          04&nbsp;&nbsp;-&nbsp;&nbsp;Inside the Atelier
-        </p>
+        <SectionKicker number="04" tone="light">Inside the Atelier</SectionKicker>
 
         <div className="mt-9 max-w-[38rem] md:mt-12 lg:mt-[clamp(2.2rem,4vh,3.75rem)] lg:max-w-[45rem]">
           <h2
@@ -106,15 +79,13 @@ export function Experience() {
         <ol className="mt-16 grid gap-7 sm:grid-cols-2 lg:mt-auto lg:grid-cols-4 lg:gap-10 xl:gap-14">
           {experienceSteps.map((step) => (
             <li key={step.number} className="min-w-0">
-              <div className="grid grid-cols-[3.85rem_minmax(0,1fr)] items-center gap-4 md:grid-cols-[4.6rem_minmax(0,1fr)] lg:grid-cols-[4.8rem_minmax(0,1fr)]">
-                <span className="font-serif text-[3.4rem] leading-none tracking-normal text-[var(--text-inverse)] md:text-[4.4rem] lg:text-[4.75rem]">
-                  {step.number}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="h-px bg-[rgb(251_248_241_/_0.6)] after:float-right after:-mt-1 after:size-1 after:rounded-full after:bg-[rgb(251_248_241_/_0.82)] after:content-['']"
-                />
-              </div>
+              <NumberedRule
+                number={step.number}
+                numberClassName="font-serif text-[3.4rem] leading-none tracking-normal text-[var(--text-inverse)] md:text-[4.4rem] lg:text-[4.75rem]"
+                lineClassName="h-px bg-[rgb(251_248_241_/_0.6)]"
+                className="grid-cols-[3.85rem_minmax(0,1fr)] md:grid-cols-[4.6rem_minmax(0,1fr)] lg:grid-cols-[4.8rem_minmax(0,1fr)]"
+                withDot
+              />
               <div className="mt-3 md:mt-4">
                 <h3 className="font-mono text-xs font-medium uppercase leading-none tracking-[0.13em] text-[var(--text-inverse)] md:text-sm">
                   {step.title}&nbsp;&nbsp;-

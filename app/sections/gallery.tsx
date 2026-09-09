@@ -1,60 +1,18 @@
 import Image from "next/image";
-
-type GalleryFrame = {
-  number: string;
-  src: string;
-  alt: string;
-  frameClassName: string;
-  sizes: string;
-};
-
-const galleryFrames: GalleryFrame[] = [
-  {
-    number: "01",
-    src: "/atelier-elan/gallery-section/model-01-hd.png",
-    alt: "A woman in cream fabric with warm light falling across her hair.",
-    frameClassName:
-      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
-    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
-  },
-  {
-    number: "02",
-    src: "/atelier-elan/gallery-section/model-02-hd.png",
-    alt: "A quiet profile portrait showing soft dark hair and natural texture.",
-    frameClassName:
-      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
-    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
-  },
-  {
-    number: "03",
-    src: "/atelier-elan/gallery-section/model-03-hd.png",
-    alt: "A close editorial portrait with short textured hair and direct gaze.",
-    frameClassName:
-      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
-    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
-  },
-  {
-    number: "04",
-    src: "/atelier-elan/gallery-section/model-04-hd.png",
-    alt: "A blonde client portrait framed by loose textured hair.",
-    frameClassName:
-      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
-    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
-  },
-];
+import { SectionKicker } from "../components/atelier/section-kicker";
+import { galleryFrames } from "../data/atelier-content";
 
 export function Gallery() {
   return (
     <section
       id="gallery"
+      data-section-id="gallery"
       aria-labelledby="gallery-title"
       className="relative isolate overflow-hidden bg-[var(--background-primary)] text-[var(--text-primary)] lg:min-h-dvh"
     >
       <div className="grid lg:min-h-dvh lg:grid-cols-[26.5rem_minmax(0,1fr)] xl:grid-cols-[33rem_minmax(0,1fr)]">
         <div className="relative z-10 flex min-h-[42rem] flex-col bg-[var(--background-primary)] px-5 py-14 sm:px-8 md:min-h-[48rem] md:px-10 md:py-16 lg:min-h-dvh lg:px-[clamp(2.75rem,3.2vw,4rem)] lg:py-[clamp(3rem,5vh,4.5rem)]">
-          <p className="font-mono text-xs font-medium uppercase leading-none tracking-[0.13em] text-[var(--color-ink-950)] md:text-sm">
-            06&nbsp;&nbsp;-&nbsp;&nbsp;Atmosphere Studies
-          </p>
+          <SectionKicker number="06">Atmosphere Studies</SectionKicker>
 
           <div className="mt-auto pb-12 md:pb-16 lg:pb-[18vh]">
             <h2
@@ -163,7 +121,7 @@ export function Gallery() {
                 </div>
                 <figure className="relative h-[24rem] w-full overflow-hidden bg-[var(--color-espresso-800)] xl:h-[27rem]">
                   <Image
-                    src="/atelier-elan/experience-section/experience-background-large.png"
+                    src="/atelier-elan/gallery-section/testimonial-mara-hair-detail.png"
                     alt="A quiet private atelier room with mirror and warm architectural light."
                     fill
                     sizes="(min-width: 1280px) 14rem, 12rem"

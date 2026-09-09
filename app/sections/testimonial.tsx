@@ -2,85 +2,12 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
-
-type TestimonialVisual = {
-  src: string;
-  alt: string;
-  imageClassName: string;
-};
-
-type TestimonialVoice = {
-  number: string;
-  titleLines: [string, string];
-  quote: string;
-  client: string;
-  service: string;
-  visual: TestimonialVisual;
-};
-
-const claraVisual: TestimonialVisual = {
-  src: "/atelier-elan/testimonial-section/testimonial-clara-over-shoulder.png",
-  alt: "Clara looks back over her shoulder after her salon consultation.",
-  imageClassName: "object-[48%_42%]",
-};
-
-const maraVisual: TestimonialVisual = {
-  src: "/atelier-elan/testimonial-section/testimonial-mara-hair-detail.png",
-  alt: "Mara studies the movement at the ends of her finished hair.",
-  imageClassName: "object-[45%_42%]",
-};
-
-const jessVisual: TestimonialVisual = {
-  src: "/atelier-elan/testimonial-section/testimonial-jess-relaxed.png",
-  alt: "Jess relaxes with one hand beneath her newly shaped hair.",
-  imageClassName: "object-[55%_42%]",
-};
-
-const noaVisual: TestimonialVisual = {
-  src: "/atelier-elan/testimonial-section/testimonial-noa-hair-over-shoulder.png",
-  alt: "Noa gathers her layered hair over one shoulder in the atelier.",
-  imageClassName: "object-[50%_42%]",
-};
-
-const testimonialVoices: TestimonialVoice[] = [
-  {
-    number: "07",
-    titleLines: ["Listened To.", "Before A Single Cut."],
-    quote:
-      "Nothing felt prescribed. The consultation found the shape I had been trying to describe for years.",
-    client: "Clara M. -- Atelier Client",
-    service: "Consultation / Signature Cut",
-    visual: claraVisual,
-  },
-  {
-    number: "08",
-    titleLines: ["The Difference", "Was Attention."],
-    quote:
-      "I recognised myself immediately--only lighter, more considered, and completely at ease.",
-    client: "Mara S. -- Colour Client",
-    service: "Dimensional Colour / First Visit",
-    visual: maraVisual,
-  },
-  {
-    number: "09",
-    titleLines: ["It Finally", "Feels Like Me."],
-    quote:
-      "Soft movement, better texture, and a shape that grows out beautifully.",
-    client: "Jess L. -- Atelier Client",
-    service: "Lived-In Blend / Signature Cut",
-    visual: jessVisual,
-  },
-  {
-    number: "10",
-    titleLines: ["A Shape", "I Could Live In."],
-    quote:
-      "The result felt refined without feeling unfamiliar. I left with ease I could actually keep.",
-    client: "Noa R. -- Returning Client",
-    service: "Refinement / Seasonal Shape",
-    visual: noaVisual,
-  },
-];
+import { SectionKicker } from "../components/atelier/section-kicker";
+import { useCyclicIndex } from "../components/atelier/use-cyclic-index";
+import {
+  testimonialVoices,
+  type TestimonialVisual,
+} from "../data/atelier-content";
 
 function ResponsiveImage({
   visual,
@@ -102,29 +29,17 @@ function ResponsiveImage({
 }
 
 export function Testimonial() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { index: activeIndex, next: showNext, previous: showPrevious } =
+    useCyclicIndex(testimonialVoices.length);
   const activeVoice = testimonialVoices[activeIndex];
   const nextVoice =
     testimonialVoices[(activeIndex + 1) % testimonialVoices.length];
   const progress = ((activeIndex + 1) / testimonialVoices.length) * 100;
 
-  const showPrevious = () => {
-    setActiveIndex(
-      (currentIndex) =>
-        (currentIndex - 1 + testimonialVoices.length) %
-        testimonialVoices.length,
-    );
-  };
-
-  const showNext = () => {
-    setActiveIndex(
-      (currentIndex) => (currentIndex + 1) % testimonialVoices.length,
-    );
-  };
-
   return (
     <section
       id="testimonials"
+      data-section-id="testimonials"
       aria-labelledby="testimonial-title"
       data-testimonial-section
       data-testimonial-current={activeVoice.number}
@@ -179,9 +94,9 @@ export function Testimonial() {
           data-testimonial-panel="active-copy"
           className="order-2 flex min-w-0 flex-col px-0 pb-8 pt-9 md:pt-11 lg:order-none lg:px-[clamp(2.4rem,3.55vw,4rem)] lg:pb-[7vh] lg:pt-[15vh]"
         >
-          <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[var(--color-ink-950)] md:text-sm">
-            {activeVoice.number}&nbsp;&nbsp;--&nbsp;&nbsp;Client Voices
-          </p>
+          <SectionKicker number={activeVoice.number} className="tracking-normal">
+            Client Voices
+          </SectionKicker>
 
           <h2
             id="testimonial-title"

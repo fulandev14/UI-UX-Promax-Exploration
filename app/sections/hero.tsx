@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Menu, X } from "lucide-react";
+import { useState } from "react";
+import { useSectionState } from "../components/atelier/section-state";
 
 const navItems = [
   { label: "About", href: "#about"},
@@ -10,9 +14,15 @@ const navItems = [
 ];
 
 export function Hero() {
+  const { activeSectionId } = useSectionState();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <section
       id="hero"
+      data-section-id="hero"
       aria-labelledby="hero-title"
       className="relative isolate min-h-dvh overflow-hidden bg-[var(--background-primary)] text-[var(--text-inverse)]"
     >
@@ -21,8 +31,22 @@ export function Hero() {
           href="#hero"
           className="font-sans text-lg font-semibold uppercase tracking-[0.12em] outline-none focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)] md:text-2xl"
         >
-          ATELIER ÉLAN
+          ATELIER ELAN
         </a>
+        <button
+          type="button"
+          aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setIsMenuOpen((open) => !open)}
+          className="ml-auto inline-flex size-11 items-center justify-center text-[var(--text-primary)] outline-none transition-opacity hover:opacity-60 focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)] lg:hidden"
+        >
+          {isMenuOpen ? (
+            <X aria-hidden="true" className="size-6 stroke-[1.5]" />
+          ) : (
+            <Menu aria-hidden="true" className="size-6 stroke-[1.5]" />
+          )}
+        </button>
         <nav
           aria-label="Primary navigation"
           className="mx-auto hidden items-center gap-12 font-sans text-[0.8125rem] font-semibold uppercase leading-none tracking-[0.08em] lg:flex"
@@ -31,7 +55,8 @@ export function Hero() {
             <a
               key={item.href}
               href={item.href}
-              className="outline-none transition-colors duration-200 hover:text-[var(--text-muted)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)]"
+              aria-current={activeSectionId === item.href.slice(1) ? "location" : undefined}
+              className={`outline-none transition-colors duration-200 hover:text-[var(--text-muted)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)] ${activeSectionId === item.href.slice(1) ? "text-[var(--color-ink-950)] underline decoration-[var(--accent-primary)] decoration-2 underline-offset-8" : ""}`}
             >
               {item.label}
             </a>
@@ -44,6 +69,30 @@ export function Hero() {
           Book appointment
         </a>
       </header>
+
+      <nav
+        id="mobile-navigation"
+        aria-label="Mobile navigation"
+        className={`${isMenuOpen ? "block" : "hidden"} relative z-30 border-b border-[var(--border-subtle)] bg-[var(--nav-bg)] px-5 py-4 backdrop-blur-sm lg:hidden`}
+      >
+        <ul className="grid gap-1">
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <a
+                href={item.href}
+                aria-current={activeSectionId === item.href.slice(1) ? "location" : undefined}
+                onClick={closeMenu}
+                className={`flex min-h-11 items-center justify-between border-b border-[var(--border-subtle)] font-mono text-xs font-medium uppercase tracking-[0.1em] outline-none transition-colors last:border-b-0 hover:text-[var(--text-muted)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] ${activeSectionId === item.href.slice(1) ? "text-[var(--color-ink-950)]" : "text-[var(--text-primary)]"}`}
+              >
+                <span>{item.label}</span>
+                {activeSectionId === item.href.slice(1) ? (
+                  <span aria-hidden="true" className="size-2 bg-[var(--accent-primary)]" />
+                ) : null}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <div className="relative min-h-[calc(100dvh-4rem)] md:min-h-[calc(100dvh-5rem)]">
         <aside
@@ -107,7 +156,7 @@ export function Hero() {
                     href="#booking"
                     className="inline-flex min-h-[3.25rem] w-full max-w-72 items-center justify-between gap-8 bg-[var(--accent-primary)] px-6 font-sans text-[0.8125rem] font-semibold uppercase leading-none tracking-[0.08em] text-[var(--color-ink-950)] outline-none transition-colors duration-200 hover:bg-[var(--color-acid-500)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--accent-primary)] sm:w-auto sm:min-w-72"
                   >
-                    Begin your ritual
+                    <span>Begin your ritual</span>
                     <ArrowRight aria-hidden="true" className="size-7 stroke-[1.5]" />
                   </a>
 
