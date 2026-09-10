@@ -324,6 +324,7 @@ export function Testimonial() {
     <section
       ref={testimonialRef}
       id="testimonials"
+      data-section-id="testimonials"
       aria-labelledby="testimonial-title"
       data-testimonial-section
       data-testimonial-current={activeVoice.number}
@@ -378,9 +379,9 @@ export function Testimonial() {
           data-testimonial-panel="active-copy"
           className="order-2 flex min-w-0 flex-col px-0 pb-8 pt-9 md:pt-11 lg:order-none lg:px-[clamp(2.4rem,3.55vw,4rem)] lg:pb-[7vh] lg:pt-[15vh]"
         >
-          <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[var(--color-ink-950)] md:text-sm">
-            {activeVoice.number}&nbsp;&nbsp;--&nbsp;&nbsp;Client Voices
-          </p>
+          <SectionKicker number={activeVoice.number} className="tracking-normal">
+            Client Voices
+          </SectionKicker>
 
           <h2
             id="testimonial-title"

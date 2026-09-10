@@ -179,6 +179,7 @@ export function Service() {
     <section
       ref={serviceRef}
       id="services"
+      data-section-id="services"
       aria-labelledby="services-title"
       className="relative isolate overflow-hidden bg-[var(--background-primary)] text-[var(--text-primary)]"
     >
@@ -223,7 +224,7 @@ export function Service() {
                   index === 0 ? "pt-0" : "border-t border-[var(--border-subtle)]"
                 }`}
               >
-                <span className="row-span-2 font-serif text-[3.5rem] leading-[0.82] tracking-[-0.04em] text-[var(--color-espresso-800)] sm:row-span-1 sm:text-[4.75rem] md:text-[5.4rem] lg:text-[clamp(4rem,5vw,5.5rem)]">
+                <span className="row-span-2 font-serif text-[3.5rem] leading-[0.82] tracking-normal text-[var(--color-espresso-800)] sm:row-span-1 sm:text-[4.75rem] md:text-[5.4rem] lg:text-[clamp(4rem,5vw,5.5rem)]">
                   {service.number}
                 </span>
 
@@ -247,11 +248,11 @@ export function Service() {
             <a
               data-service-link
               href="#booking"
-              className="inline-flex min-h-11 w-full max-w-[20.5rem] items-center justify-between border-b border-[var(--border-strong)] font-mono text-xs font-medium uppercase tracking-[0.09em] outline-none transition-colors duration-200 hover:text-[var(--text-muted)] focus-visible:ring-[var(--focus-ring-width)] focus-visible:ring-[var(--interactive-focus)] focus-visible:ring-offset-[var(--focus-ring-offset)] focus-visible:ring-offset-[var(--background-primary)] md:text-sm"
+              className="min-h-11 w-full max-w-[20.5rem] justify-between border-b border-[var(--border-strong)] md:text-sm"
+              iconClassName="size-5 stroke-[1.35]"
             >
               Discover the full service edit
-              <ArrowRight aria-hidden="true" className="size-5 stroke-[1.35]" />
-            </a>
+            </ArrowLink>
             <p className="mt-8 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-[var(--color-charcoal-900)] md:text-xs lg:mt-9">
               Craft / Ritual / Result
             </p>
@@ -277,7 +278,7 @@ export function Service() {
             <span className="block w-max origin-left scale-x-[0.72] whitespace-nowrap font-sans text-[clamp(4.6rem,13vw,8rem)] font-black uppercase leading-[0.8] tracking-[-0.05em] lg:scale-x-[0.58] lg:text-[clamp(6.5rem,8.5vw,10.5rem)] lg:leading-[0.86]">
               The Craft
             </span>
-            <span className="mt-2 block w-max origin-left scale-x-[0.84] whitespace-nowrap font-serif text-[clamp(4.1rem,12vw,7.5rem)] font-normal italic leading-[0.82] tracking-[-0.04em] lg:mt-4 lg:scale-x-[1.35] lg:text-[clamp(6.25rem,8.2vw,10rem)]">
+            <span className="mt-2 block w-max origin-left scale-x-[0.84] whitespace-nowrap font-serif text-[clamp(4.1rem,12vw,7.5rem)] font-normal italic leading-[0.82] tracking-normal lg:mt-4 lg:scale-x-[1.35] lg:text-[clamp(6.25rem,8.2vw,10rem)]">
               of Care.
             </span>
           </h3>

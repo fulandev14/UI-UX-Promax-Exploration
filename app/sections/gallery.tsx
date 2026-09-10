@@ -219,6 +219,7 @@ export function Gallery() {
     <section
       ref={galleryRef}
       id="gallery"
+      data-section-id="gallery"
       aria-labelledby="gallery-title"
       className="relative isolate overflow-hidden bg-[var(--background-primary)] text-[var(--text-primary)] lg:min-h-dvh"
     >
@@ -365,7 +366,7 @@ export function Gallery() {
                 </div>
                 <figure className="relative h-[24rem] w-full overflow-hidden bg-[var(--color-espresso-800)] xl:h-[27rem]">
                   <Image
-                    src="/atelier-elan/experience-section/experience-background-large.png"
+                    src="/atelier-elan/gallery-section/testimonial-mara-hair-detail.png"
                     alt="A quiet private atelier room with mirror and warm architectural light."
                     fill
                     sizes="(min-width: 1280px) 14rem, 12rem"

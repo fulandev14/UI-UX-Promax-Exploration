@@ -174,6 +174,7 @@ export function Experience() {
     <section
       ref={experienceRef}
       id="studio"
+      data-section-id="studio"
       aria-labelledby="experience-title"
       className="relative isolate min-h-[56rem] overflow-hidden bg-[var(--background-inverse)] text-[var(--text-inverse)] sm:min-h-[62rem] lg:min-h-dvh"
     >

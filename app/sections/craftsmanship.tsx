@@ -200,6 +200,7 @@ export function Craftsmanship() {
     <section
       ref={craftsmanshipRef}
       id="artistry"
+      data-section-id="artistry"
       aria-labelledby="craftsmanship-title"
       className="relative overflow-hidden bg-[var(--background-primary)] px-5 py-16 text-[var(--text-primary)] sm:px-8 md:px-10 md:py-20 lg:min-h-dvh lg:px-[clamp(3rem,3.2vw,4rem)] lg:py-[clamp(3rem,5vh,4.25rem)]"
     >
@@ -256,7 +257,7 @@ export function Craftsmanship() {
                 <span
                   data-craft-marker
                   aria-hidden="true"
-                  className="absolute -left-3 -top-[0.62em] z-10 font-serif text-[clamp(4.75rem,12vw,7.25rem)] leading-none tracking-[-0.06em] text-[var(--color-ink-950)] sm:-left-5 xl:text-[clamp(5.5rem,6.5vw,7.5rem)]"
+                  className="absolute -left-3 -top-[0.62em] z-10 font-serif text-[clamp(4.75rem,12vw,7.25rem)] leading-none tracking-normal text-[var(--color-ink-950)] sm:-left-5 xl:text-[clamp(5.5rem,6.5vw,7.5rem)]"
                 >
                   {step.number}
                 </span>

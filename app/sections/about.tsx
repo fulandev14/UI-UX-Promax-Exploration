@@ -171,6 +171,7 @@ export function About() {
     <section
       ref={aboutRef}
       id="about"
+      data-section-id="about"
       aria-labelledby="about-title"
       className="relative overflow-hidden bg-[var(--background-primary)] px-5 py-16 text-[var(--text-primary)] md:px-10 md:py-20 lg:min-h-dvh lg:px-16 lg:py-14 min-[90rem]:px-20"
     >
@@ -241,12 +242,12 @@ export function About() {
                 data-about-principle
                 className="grid grid-cols-[4.25rem_minmax(0,1fr)] items-start gap-4 md:grid-cols-[5rem_minmax(0,1fr)] lg:grid-cols-[5rem_minmax(6rem,1fr)_minmax(12rem,19rem)]"
               >
-                <div className="font-serif text-[3rem] leading-none text-[var(--text-primary)] md:text-[4rem]">
-                  {principle.number}
-                </div>
-                <div
-                  aria-hidden="true"
-                  className="mt-7 h-px bg-[var(--border-subtle)] after:float-right after:-mt-1 after:size-1 after:rounded-full after:bg-[var(--text-muted)] after:content-[''] md:mt-9"
+                <NumberedRule
+                  number={principle.number}
+                  numberClassName="font-serif text-[3rem] leading-none text-[var(--text-primary)] md:text-[4rem]"
+                  lineClassName="mt-7 h-px bg-[var(--border-subtle)] md:mt-9"
+                  className="col-span-2 grid-cols-[4.25rem_minmax(0,1fr)] md:grid-cols-[5rem_minmax(0,1fr)] lg:grid-cols-[5rem_minmax(6rem,1fr)]"
+                  withDot
                 />
                 <div className="col-start-2 pt-1.5 lg:col-start-auto">
                   <h3 className="font-mono text-sm font-medium uppercase leading-none tracking-[0.14em] text-[var(--text-primary)] md:text-base">

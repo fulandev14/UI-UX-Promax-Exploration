@@ -142,6 +142,7 @@ export function Booking() {
     <section
       ref={bookingRef}
       id="booking"
+      data-section-id="booking"
       aria-labelledby="booking-title"
       className="relative isolate overflow-hidden bg-[var(--background-inverse)] text-[var(--text-inverse)]"
     >
@@ -205,7 +206,7 @@ export function Booking() {
               09&nbsp;&nbsp;-&nbsp;&nbsp;The Next Chapter
             </p>
 
-            <div className="mt-18 max-w-[44rem] sm:mt-20 md:mt-24 lg:mt-[15vh] lg:max-w-[58rem]">
+            <div className="mt-16 max-w-[44rem] sm:mt-20 md:mt-24 lg:mt-[15vh] lg:max-w-[58rem]">
               <h2
                 id="booking-title"
                 className="font-sans text-[3.35rem] font-black uppercase leading-[0.82] tracking-normal text-[var(--text-inverse)] sm:text-[6rem] md:text-[7.5rem] lg:text-[8.5rem] xl:text-[7.1rem] 2xl:text-[9.5rem]"

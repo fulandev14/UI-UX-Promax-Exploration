@@ -111,6 +111,7 @@ export function Footer() {
     <footer
       ref={footerRef}
       id="footer"
+      data-section-id="footer"
       aria-labelledby="footer-title"
       className="relative overflow-hidden bg-[var(--background-inverse)] px-5 pb-6 pt-10 text-[var(--text-inverse)] sm:px-8 md:px-10 lg:px-[clamp(3rem,3.2vw,4rem)] lg:pb-8 lg:pt-12"
     >
@@ -146,7 +147,7 @@ export function Footer() {
               <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.72)] md:text-sm">
                 Hours
               </p>
-              <dl className="mt-6 space-y-3 font-mono text-sm font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.94)] sm:text-base md:text-md">
+              <dl className="mt-6 space-y-3 font-mono text-sm font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.94)] sm:text-base md:text-base">
                 <div className="flex gap-5">
                   <dt>Tue-Fri</dt>
                   <dd>10:00-19:00</dd>
@@ -165,7 +166,7 @@ export function Footer() {
               <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.72)] md:text-sm">
                 Contact
               </p>
-              <address className="mt-6 space-y-3 font-mono text-sm font-medium uppercase not-italic leading-none tracking-normal text-[rgb(251_248_241_/_0.94)] sm:text-base md:text-md">
+              <address className="mt-6 space-y-3 font-mono text-sm font-medium uppercase not-italic leading-none tracking-normal text-[rgb(251_248_241_/_0.94)] sm:text-base md:text-base">
                 <a
                   href="tel:+33184802418"
                   className="block w-max transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-[var(--focus-ring-width)] focus-visible:outline-offset-[var(--focus-ring-offset)] focus-visible:outline-[var(--accent-primary)]"
@@ -280,7 +281,7 @@ export function Footer() {
         <p
           data-footer-wordmark
           aria-label="Atelier Elan"
-          className="break-words font-sans text-[4rem] font-black uppercase leading-[0.76] tracking-normal text-[rgb(251_248_241_/_0.96)] sm:text-[6.4rem] md:text-[8.8rem] lg:whitespace-nowrap lg:text-[8.2rem] xl:text-[10.2rem] 2xl:text-[13.7rem]"
+          className="break-words font-sans text-[4rem] font-black uppercase leading-[0.76] tracking-normal text-[rgb(251_248_241_/_0.96)] sm:text-[6.4rem] md:text-[8.8rem] lg:whitespace-nowrap lg:text-[8.2rem] xl:text-[11.2rem] 2xl:text-[14.7rem]"
         >
           ATELIER ÉLAN
         </p>
