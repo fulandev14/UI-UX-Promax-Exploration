@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type TestimonialVisual = {
   src: string;
@@ -102,11 +107,204 @@ function ResponsiveImage({
 }
 
 export function Testimonial() {
+  const testimonialRef = useRef<HTMLElement | null>(null);
+  const hasRenderedVoiceRef = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const activeVoice = testimonialVoices[activeIndex];
   const nextVoice =
     testimonialVoices[(activeIndex + 1) % testimonialVoices.length];
   const progress = ((activeIndex + 1) / testimonialVoices.length) * 100;
+
+  useGSAP(
+    () => {
+      const testimonial = testimonialRef.current;
+
+      if (!testimonial) {
+        return;
+      }
+
+      const media = gsap.matchMedia();
+
+      media.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        ({ conditions }) => {
+          const reduceMotion = conditions?.reduceMotion ?? false;
+          const select = gsap.utils.selector(testimonialRef);
+          const activeImage = select('[data-testimonial-panel="active-image"]');
+          const activeCopy = select('[data-testimonial-panel="active-copy"]');
+          const preview = select('[data-testimonial-panel="preview"]');
+          const controls = select("[data-testimonial-controls]");
+          const progressFill = select("[data-testimonial-progress-fill]");
+
+          if (reduceMotion) {
+            if (progressFill.length) {
+              gsap.set(progressFill, {
+                scaleX: progress / 100,
+                transformOrigin: "left center",
+              });
+            }
+
+            return;
+          }
+
+          const entrance = gsap.timeline({
+            defaults: {
+              ease: "power2.out",
+            },
+            scrollTrigger: {
+              trigger: testimonial,
+              start: "top 80%",
+              once: true,
+              toggleActions: "play none none none",
+              invalidateOnRefresh: true,
+            },
+          });
+
+          if (activeImage.length) {
+            entrance.from(
+              activeImage,
+              { autoAlpha: 0, y: 18, duration: 0.75 },
+              0,
+            );
+          }
+
+          if (activeCopy.length) {
+            entrance.from(
+              activeCopy,
+              { autoAlpha: 0, y: 16, duration: 0.6 },
+              0.12,
+            );
+          }
+
+          if (preview.length) {
+            entrance.from(
+              preview,
+              { autoAlpha: 0, y: 12, duration: 0.55 },
+              0.24,
+            );
+          }
+
+          if (controls.length) {
+            entrance.from(
+              controls,
+              { autoAlpha: 0, y: 10, duration: 0.45 },
+              0.3,
+            );
+          }
+
+          if (progressFill.length) {
+            gsap.set(progressFill, {
+              scaleX: progress / 100,
+              transformOrigin: "left center",
+            });
+          }
+        },
+        testimonialRef,
+      );
+
+      return () => media.revert();
+    },
+    { scope: testimonialRef },
+  );
+
+  useGSAP(
+    () => {
+      if (!hasRenderedVoiceRef.current) {
+        hasRenderedVoiceRef.current = true;
+        return;
+      }
+
+      const testimonial = testimonialRef.current;
+
+      if (!testimonial) {
+        return;
+      }
+
+      const media = gsap.matchMedia();
+
+      media.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        ({ conditions }) => {
+          const reduceMotion = conditions?.reduceMotion ?? false;
+          const select = gsap.utils.selector(testimonialRef);
+          const activeImage = select('[data-testimonial-panel="active-image"]');
+          const activeCopy = select('[data-testimonial-panel="active-copy"]');
+          const preview = select('[data-testimonial-panel="preview"]');
+          const progressFill = select("[data-testimonial-progress-fill]");
+
+          if (!activeImage.length || !activeCopy.length || !preview.length) {
+            return;
+          }
+
+          const nextProgress = progress / 100;
+
+          if (reduceMotion) {
+            gsap.set(
+              [...activeImage, ...activeCopy, ...preview],
+              { autoAlpha: 1, y: 0 },
+            );
+            if (progressFill.length) {
+              gsap.set(progressFill, {
+                scaleX: nextProgress,
+                transformOrigin: "left center",
+              });
+            }
+
+            return;
+          }
+
+          const transition = gsap.timeline({
+            defaults: {
+              ease: "power2.inOut",
+            },
+          });
+
+          transition.fromTo(
+            activeImage,
+            { autoAlpha: 0.82, y: 12 },
+            { autoAlpha: 1, y: 0, duration: 0.38, ease: "power2.out" },
+            0,
+          );
+          transition.fromTo(
+            activeCopy,
+            { autoAlpha: 0, y: 16 },
+            { autoAlpha: 1, y: 0, duration: 0.52 },
+            0.04,
+          );
+          transition.fromTo(
+            preview,
+            { autoAlpha: 0.78, y: 10 },
+            { autoAlpha: 1, y: 0, duration: 0.46, ease: "power2.out" },
+            0.12,
+          );
+
+          if (progressFill.length) {
+            transition.to(
+              progressFill,
+              {
+                scaleX: nextProgress,
+                transformOrigin: "left center",
+                duration: 0.48,
+              },
+              0,
+            );
+          }
+        },
+        testimonialRef,
+      );
+
+      return () => media.revert();
+    },
+    {
+      dependencies: [activeIndex],
+      revertOnUpdate: true,
+      scope: testimonialRef,
+    },
+  );
 
   const showPrevious = () => {
     setActiveIndex(
@@ -124,6 +322,7 @@ export function Testimonial() {
 
   return (
     <section
+      ref={testimonialRef}
       id="testimonials"
       aria-labelledby="testimonial-title"
       data-testimonial-section
@@ -224,8 +423,9 @@ export function Testimonial() {
               className="relative h-[2px] flex-1 bg-[var(--color-ink-950)]"
             >
               <span
-                className="absolute left-0 top-0 h-full bg-[var(--accent-primary)] transition-[width] duration-500 ease-out"
-                style={{ width: `${progress}%` }}
+                data-testimonial-progress-fill
+                className="absolute left-0 top-0 h-full origin-left bg-[var(--accent-primary)]"
+                style={{ width: "100%" }}
               />
             </div>
             <button
@@ -313,7 +513,10 @@ export function Testimonial() {
           </div>
         </aside>
 
-        <div className="order-4 mt-6 flex items-center justify-between gap-4 lg:hidden">
+        <div
+          data-testimonial-controls
+          className="order-4 mt-6 flex items-center justify-between gap-4 lg:hidden"
+        >
           <button
             type="button"
             aria-label="Show previous client voice"

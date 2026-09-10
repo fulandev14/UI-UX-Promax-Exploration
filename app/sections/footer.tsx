@@ -1,4 +1,12 @@
+"use client";
+
+import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const exploreLinks = [
   { label: "About", href: "#about" },
@@ -14,16 +22,107 @@ const legalLinks = [
 ];
 
 export function Footer() {
+  const footerRef = useRef<HTMLElement | null>(null);
+
+  useGSAP(
+    () => {
+      const footer = footerRef.current;
+
+      if (!footer) {
+        return;
+      }
+
+      const media = gsap.matchMedia();
+
+      media.add(
+        {
+          desktop: "(min-width: 64rem)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        ({ conditions }) => {
+          const {
+            desktop = false,
+            reduceMotion = false,
+          } = conditions ?? {};
+          const select = gsap.utils.selector(footerRef);
+          const rule = select("[data-footer-rule]");
+          const groups = select("[data-footer-group]");
+          const wordmark = select("[data-footer-wordmark]");
+
+          if (reduceMotion) {
+            return;
+          }
+
+          const entrance = gsap.timeline({
+            defaults: {
+              ease: "power2.out",
+            },
+            scrollTrigger: {
+              trigger: footer,
+              start: "top 88%",
+              once: true,
+              toggleActions: "play none none none",
+              invalidateOnRefresh: true,
+            },
+          });
+
+          if (rule.length) {
+            entrance.from(
+              rule,
+              {
+                scaleX: 0,
+                transformOrigin: "left center",
+                duration: 0.55,
+              },
+              0,
+            );
+          }
+
+          if (groups.length) {
+            entrance.from(
+              groups,
+              {
+                autoAlpha: 0,
+                y: desktop ? 14 : 10,
+                duration: 0.55,
+                stagger: desktop ? 0.06 : 0.04,
+              },
+              0.1,
+            );
+          }
+
+          if (wordmark.length) {
+            entrance.from(
+              wordmark,
+              { autoAlpha: 0, y: 12, duration: 0.6 },
+              desktop ? 0.38 : 0.28,
+            );
+          }
+        },
+        footerRef,
+      );
+
+      return () => media.revert();
+    },
+    { scope: footerRef },
+  );
+
   return (
     <footer
+      ref={footerRef}
       id="footer"
       aria-labelledby="footer-title"
       className="relative overflow-hidden bg-[var(--background-inverse)] px-5 pb-6 pt-10 text-[var(--text-inverse)] sm:px-8 md:px-10 lg:px-[clamp(3rem,3.2vw,4rem)] lg:pb-8 lg:pt-12"
     >
       <div className="mx-auto max-w-[116rem]">
-        <div className="border-t border-[rgb(251_248_241_/_0.36)]">
+        <div>
+          <div
+            data-footer-rule
+            aria-hidden="true"
+            className="h-px origin-left bg-[rgb(251_248_241_/_0.36)]"
+          />
           <div className="grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-[1.08fr_1fr_1fr] lg:gap-0 lg:py-12">
-            <div className="lg:pr-14">
+            <div data-footer-group className="lg:pr-14">
               <h2
                 id="footer-title"
                 className="max-w-[11ch] font-serif text-[3rem] font-normal italic leading-[0.96] tracking-normal text-[rgb(251_248_241_/_0.96)] sm:text-[4rem] lg:text-[3.5rem] xl:text-[4.1rem]"
@@ -40,7 +139,10 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="border-t border-[rgb(251_248_241_/_0.28)] pt-8 md:border-t-0 md:pt-0 lg:border-l lg:px-14">
+            <div
+              data-footer-group
+              className="border-t border-[rgb(251_248_241_/_0.28)] pt-8 md:border-t-0 md:pt-0 lg:border-l lg:px-14"
+            >
               <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.72)] md:text-sm">
                 Hours
               </p>
@@ -56,7 +158,10 @@ export function Footer() {
               </dl>
             </div>
 
-            <div className="border-t border-[rgb(251_248_241_/_0.28)] pt-8 md:col-span-2 md:border-t md:pt-8 lg:col-span-1 lg:border-l lg:border-t-0 lg:px-14 lg:pt-0">
+            <div
+              data-footer-group
+              className="border-t border-[rgb(251_248_241_/_0.28)] pt-8 md:col-span-2 md:border-t md:pt-8 lg:col-span-1 lg:border-l lg:border-t-0 lg:px-14 lg:pt-0"
+            >
               <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.72)] md:text-sm">
                 Contact
               </p>
@@ -80,7 +185,11 @@ export function Footer() {
 
         <div className="border-y border-[rgb(251_248_241_/_0.36)]">
           <div className="grid gap-10 py-9 lg:grid-cols-[1.08fr_0.72fr_0.82fr_1fr] lg:gap-0 lg:py-8">
-            <nav aria-label="Footer navigation" className="lg:pr-12">
+            <nav
+              data-footer-group
+              aria-label="Footer navigation"
+              className="lg:pr-12"
+            >
               <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.72)] md:text-sm">
                 Explore
               </p>
@@ -103,7 +212,10 @@ export function Footer() {
               className="hidden border-l border-[rgb(251_248_241_/_0.36)] lg:block"
             />
 
-            <div className="lg:border-l lg:border-[rgb(251_248_241_/_0.36)] lg:px-12">
+            <div
+              data-footer-group
+              className="lg:border-l lg:border-[rgb(251_248_241_/_0.36)] lg:px-12"
+            >
               <p className="font-mono text-xs font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.72)] md:text-sm">
                 Follow
               </p>
@@ -127,7 +239,7 @@ export function Footer() {
               </ul>
             </div>
 
-            <div className="flex items-start lg:justify-end">
+            <div data-footer-group className="flex items-start lg:justify-end">
               <a
                 href="#booking"
                 className="group inline-flex items-center gap-4 font-mono text-sm font-medium uppercase leading-none tracking-normal text-[var(--accent-primary)] transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-[var(--focus-ring-width)] focus-visible:outline-offset-[var(--focus-ring-offset)] focus-visible:outline-[var(--accent-primary)] sm:text-base"
@@ -143,10 +255,13 @@ export function Footer() {
         </div>
 
         <div className="grid gap-8 py-8 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start lg:gap-14">
-          <p className="font-mono text-sm font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.86)] sm:text-base">
+          <p
+            data-footer-group
+            className="font-mono text-sm font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.86)] sm:text-base"
+          >
             &copy; 2026 Atelier Elan
           </p>
-          <nav aria-label="Legal links">
+          <nav data-footer-group aria-label="Legal links">
             <ul className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-sm font-medium uppercase leading-none tracking-normal text-[rgb(251_248_241_/_0.86)] sm:text-base">
               {legalLinks.map((link) => (
                 <li key={link.label}>
@@ -163,6 +278,7 @@ export function Footer() {
         </div>
 
         <p
+          data-footer-wordmark
           aria-label="Atelier Elan"
           className="break-words font-sans text-[4rem] font-black uppercase leading-[0.76] tracking-normal text-[rgb(251_248_241_/_0.96)] sm:text-[6.4rem] md:text-[8.8rem] lg:whitespace-nowrap lg:text-[8.2rem] xl:text-[10.2rem] 2xl:text-[13.7rem]"
         >
