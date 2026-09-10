@@ -1,10 +1,223 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
-import { SectionKicker } from "../components/atelier/section-kicker";
-import { galleryFrames } from "../data/atelier-content";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+type GalleryFrame = {
+  number: string;
+  src: string;
+  alt: string;
+  frameClassName: string;
+  sizes: string;
+};
+
+const galleryFrames: GalleryFrame[] = [
+  {
+    number: "01",
+    src: "/atelier-elan/gallery-section/model-01-hd.png",
+    alt: "A woman in cream fabric with warm light falling across her hair.",
+    frameClassName:
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
+  },
+  {
+    number: "02",
+    src: "/atelier-elan/gallery-section/model-02-hd.png",
+    alt: "A quiet profile portrait showing soft dark hair and natural texture.",
+    frameClassName:
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
+  },
+  {
+    number: "03",
+    src: "/atelier-elan/gallery-section/model-03-hd.png",
+    alt: "A close editorial portrait with short textured hair and direct gaze.",
+    frameClassName:
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
+  },
+  {
+    number: "04",
+    src: "/atelier-elan/gallery-section/model-04-hd.png",
+    alt: "A blonde client portrait framed by loose textured hair.",
+    frameClassName:
+      "h-[24rem] w-[16rem] md:h-[29rem] md:w-[19.33rem] lg:h-[31rem] lg:w-[20.67rem] xl:h-[35rem] xl:w-[23.33rem]",
+    sizes: "(min-width: 1280px) 23.33rem, (min-width: 1024px) 20.67rem, (min-width: 768px) 19.33rem, 100vw",
+  },
+];
 
 export function Gallery() {
+  const galleryRef = useRef<HTMLElement | null>(null);
+
+  useGSAP(
+    () => {
+      const gallery = galleryRef.current;
+
+      if (!gallery) {
+        return;
+      }
+
+      const media = gsap.matchMedia();
+
+      media.add(
+        {
+          desktop: "(min-width: 64rem)",
+          coarsePointer: "(pointer: coarse)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        ({ conditions }) => {
+          const {
+            desktop = false,
+            coarsePointer = false,
+            reduceMotion = false,
+          } = conditions ?? {};
+          const select = gsap.utils.selector(galleryRef);
+          const introItems = select("[data-gallery-intro-item]");
+          const track = select("[data-gallery-track]")[0];
+          const trackList = select("[data-gallery-list]")[0];
+          const progressFill = select("[data-gallery-progress-fill]")[0];
+          const mobilePanels = select("[data-gallery-mobile-panel]");
+
+          const introTimeline = gsap.timeline({
+            defaults: {
+              ease: "power2.out",
+            },
+            scrollTrigger: {
+              trigger: gallery,
+              start: "top 82%",
+              once: true,
+              toggleActions: "play none none none",
+              invalidateOnRefresh: true,
+            },
+          });
+
+          if (reduceMotion) {
+            return;
+          }
+
+          if (introItems.length) {
+            introTimeline.from(
+              introItems,
+              {
+                autoAlpha: 0,
+                y: desktop ? 18 : 14,
+                duration: 0.65,
+                stagger: desktop ? 0.06 : 0.04,
+              },
+              0,
+            );
+          }
+
+          if (!desktop || coarsePointer || !track || !trackList) {
+            if (mobilePanels.length) {
+              introTimeline.from(
+                mobilePanels,
+                {
+                  autoAlpha: 0,
+                  y: 16,
+                  duration: 0.55,
+                  stagger: 0.05,
+                },
+                0.2,
+              );
+            }
+
+            return;
+          }
+
+          const desktopPanels = gsap.utils.toArray<HTMLElement>(
+            "[data-gallery-panel]",
+            trackList,
+          );
+          let maxX = 0;
+          const measureBounds = () => {
+            maxX = Math.max(0, trackList.scrollWidth - track.clientWidth);
+            return maxX;
+          };
+
+          measureBounds();
+
+          if (maxX <= 0) {
+            return;
+          }
+
+          gsap.set(trackList, { willChange: "transform" });
+          if (progressFill) {
+            gsap.set(progressFill, {
+              scaleX: 0,
+              transformOrigin: "left center",
+              willChange: "transform",
+            });
+          }
+
+          const journey = gsap.timeline({
+            defaults: {
+              ease: "none",
+            },
+            scrollTrigger: {
+              trigger: gallery,
+              start: "top top",
+              end: () => `+=${measureBounds()}`,
+              pin: true,
+              scrub: 1,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          journey.to(
+            trackList,
+            {
+              x: () => -measureBounds(),
+              duration: 1,
+            },
+            0,
+          );
+
+          if (progressFill) {
+            journey.to(progressFill, { scaleX: 1, duration: 1 }, 0);
+          }
+
+          desktopPanels.forEach((panel) => {
+            gsap.from(panel, {
+              autoAlpha: 0.62,
+              scale: 0.985,
+              duration: 0.45,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: panel,
+                containerAnimation: journey,
+                start: "left 86%",
+                end: "left 62%",
+                toggleActions: "play none none reverse",
+                invalidateOnRefresh: true,
+              },
+            });
+          });
+
+          return () => {
+            gsap.set(trackList, { willChange: "auto" });
+            if (progressFill) {
+              gsap.set(progressFill, { willChange: "auto" });
+            }
+          };
+        },
+        galleryRef,
+      );
+
+      return () => media.revert();
+    },
+    { scope: galleryRef },
+  );
+
   return (
     <section
+      ref={galleryRef}
       id="gallery"
       data-section-id="gallery"
       aria-labelledby="gallery-title"
@@ -12,31 +225,49 @@ export function Gallery() {
     >
       <div className="grid lg:min-h-dvh lg:grid-cols-[26.5rem_minmax(0,1fr)] xl:grid-cols-[33rem_minmax(0,1fr)]">
         <div className="relative z-10 flex min-h-[42rem] flex-col bg-[var(--background-primary)] px-5 py-14 sm:px-8 md:min-h-[48rem] md:px-10 md:py-16 lg:min-h-dvh lg:px-[clamp(2.75rem,3.2vw,4rem)] lg:py-[clamp(3rem,5vh,4.5rem)]">
-          <SectionKicker number="06">Atmosphere Studies</SectionKicker>
+          <p
+            data-gallery-intro-item
+            className="font-mono text-xs font-medium uppercase leading-none tracking-[0.13em] text-[var(--color-ink-950)] md:text-sm"
+          >
+            06&nbsp;&nbsp;-&nbsp;&nbsp;Atmosphere Studies
+          </p>
 
           <div className="mt-auto pb-12 md:pb-16 lg:pb-[18vh]">
             <h2
               id="gallery-title"
               className="max-w-[12ch] font-sans text-[4rem] font-black uppercase leading-[0.82] tracking-normal text-[var(--color-ink-950)] sm:text-[5.25rem] md:text-[6.75rem] lg:text-[6.5rem] xl:text-[7.5rem]"
             >
-              <span className="block w-max origin-left scale-x-[0.58] whitespace-nowrap sm:scale-x-[0.66] lg:scale-x-[0.62]">
+              <span
+                data-gallery-intro-item
+                className="block w-max origin-left scale-x-[0.58] whitespace-nowrap sm:scale-x-[0.66] lg:scale-x-[0.62]"
+              >
                 The Art
               </span>
-              <span className="mt-2 block w-max origin-left scale-x-[0.82] whitespace-nowrap font-serif text-[3.65rem] font-normal italic leading-[0.9] tracking-normal sm:text-[4.9rem] md:text-[6.2rem] lg:text-[5.6rem] xl:text-[6.55rem]">
+              <span
+                data-gallery-intro-item
+                className="mt-2 block w-max origin-left scale-x-[0.82] whitespace-nowrap font-serif text-[3.65rem] font-normal italic leading-[0.9] tracking-normal sm:text-[4.9rem] md:text-[6.2rem] lg:text-[5.6rem] xl:text-[6.55rem]"
+              >
                 Of Seeing.
               </span>
             </h2>
 
             <div
+              data-gallery-intro-item
               aria-hidden="true"
               className="mt-10 h-[2px] w-[min(72%,21rem)] bg-[var(--accent-primary)] md:mt-12"
             />
-            <p className="mt-7 font-mono text-xs font-medium uppercase leading-[1.8] tracking-[0.13em] text-[var(--color-ink-950)] md:text-sm">
+            <p
+              data-gallery-intro-item
+              className="mt-7 font-mono text-xs font-medium uppercase leading-[1.8] tracking-[0.13em] text-[var(--color-ink-950)] md:text-sm"
+            >
               Light / Touch / Reflection / Space
             </p>
           </div>
 
-          <p className="max-w-[36ch] font-mono text-xs leading-relaxed text-[var(--color-ink-950)] md:text-sm lg:max-w-[34ch]">
+          <p
+            data-gallery-intro-item
+            className="max-w-[36ch] font-mono text-xs leading-relaxed text-[var(--color-ink-950)] md:text-sm lg:max-w-[34ch]"
+          >
             A sequence of quiet observations.
           </p>
         </div>
@@ -48,11 +279,25 @@ export function Gallery() {
           />
 
           <div
+            data-gallery-progress
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden h-px bg-[rgb(251_248_241_/_0.16)] lg:block"
+          >
+            <span
+              data-gallery-progress-fill
+              className="block h-full w-full origin-left bg-[var(--accent-primary)]"
+            />
+          </div>
+
+          <div
             data-gallery-track
             className="relative hidden min-h-dvh snap-x snap-mandatory overflow-x-auto overflow-y-hidden pb-8 [scrollbar-width:none] lg:block [&::-webkit-scrollbar]:hidden"
             aria-label="Atmosphere gallery"
           >
-            <ol className="relative z-10 flex w-max items-start gap-4 px-6 pt-[22vh] xl:gap-7 xl:px-8 2xl:gap-8">
+            <ol
+              data-gallery-list
+              className="relative z-10 flex w-max items-start gap-4 px-6 pt-[22vh] xl:gap-7 xl:px-8 2xl:gap-8"
+            >
               {galleryFrames.map((frame) => (
                 <li
                   key={frame.number}
@@ -135,7 +380,11 @@ export function Gallery() {
 
           <ol className="relative z-10 grid gap-8 px-5 py-14 sm:px-8 md:grid-cols-2 md:px-10 lg:hidden">
             {galleryFrames.map((frame) => (
-              <li key={frame.number} className="min-w-0">
+              <li
+                data-gallery-mobile-panel
+                key={frame.number}
+                className="min-w-0"
+              >
                 <p className="mb-4 flex items-center gap-4 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-[rgb(251_248_241_/_0.86)]">
                   {frame.number}
                   <span

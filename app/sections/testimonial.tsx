@@ -2,12 +2,90 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SectionKicker } from "../components/atelier/section-kicker";
-import { useCyclicIndex } from "../components/atelier/use-cyclic-index";
-import {
-  testimonialVoices,
-  type TestimonialVisual,
-} from "../data/atelier-content";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+type TestimonialVisual = {
+  src: string;
+  alt: string;
+  imageClassName: string;
+};
+
+type TestimonialVoice = {
+  number: string;
+  titleLines: [string, string];
+  quote: string;
+  client: string;
+  service: string;
+  visual: TestimonialVisual;
+};
+
+const claraVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-clara-over-shoulder.png",
+  alt: "Clara looks back over her shoulder after her salon consultation.",
+  imageClassName: "object-[48%_42%]",
+};
+
+const maraVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-mara-hair-detail.png",
+  alt: "Mara studies the movement at the ends of her finished hair.",
+  imageClassName: "object-[45%_42%]",
+};
+
+const jessVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-jess-relaxed.png",
+  alt: "Jess relaxes with one hand beneath her newly shaped hair.",
+  imageClassName: "object-[55%_42%]",
+};
+
+const noaVisual: TestimonialVisual = {
+  src: "/atelier-elan/testimonial-section/testimonial-noa-hair-over-shoulder.png",
+  alt: "Noa gathers her layered hair over one shoulder in the atelier.",
+  imageClassName: "object-[50%_42%]",
+};
+
+const testimonialVoices: TestimonialVoice[] = [
+  {
+    number: "07",
+    titleLines: ["Listened To.", "Before A Single Cut."],
+    quote:
+      "Nothing felt prescribed. The consultation found the shape I had been trying to describe for years.",
+    client: "Clara M. -- Atelier Client",
+    service: "Consultation / Signature Cut",
+    visual: claraVisual,
+  },
+  {
+    number: "08",
+    titleLines: ["The Difference", "Was Attention."],
+    quote:
+      "I recognised myself immediately--only lighter, more considered, and completely at ease.",
+    client: "Mara S. -- Colour Client",
+    service: "Dimensional Colour / First Visit",
+    visual: maraVisual,
+  },
+  {
+    number: "09",
+    titleLines: ["It Finally", "Feels Like Me."],
+    quote:
+      "Soft movement, better texture, and a shape that grows out beautifully.",
+    client: "Jess L. -- Atelier Client",
+    service: "Lived-In Blend / Signature Cut",
+    visual: jessVisual,
+  },
+  {
+    number: "10",
+    titleLines: ["A Shape", "I Could Live In."],
+    quote:
+      "The result felt refined without feeling unfamiliar. I left with ease I could actually keep.",
+    client: "Noa R. -- Returning Client",
+    service: "Refinement / Seasonal Shape",
+    visual: noaVisual,
+  },
+];
 
 function ResponsiveImage({
   visual,
@@ -29,15 +107,222 @@ function ResponsiveImage({
 }
 
 export function Testimonial() {
-  const { index: activeIndex, next: showNext, previous: showPrevious } =
-    useCyclicIndex(testimonialVoices.length);
+  const testimonialRef = useRef<HTMLElement | null>(null);
+  const hasRenderedVoiceRef = useRef(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const activeVoice = testimonialVoices[activeIndex];
   const nextVoice =
     testimonialVoices[(activeIndex + 1) % testimonialVoices.length];
   const progress = ((activeIndex + 1) / testimonialVoices.length) * 100;
 
+  useGSAP(
+    () => {
+      const testimonial = testimonialRef.current;
+
+      if (!testimonial) {
+        return;
+      }
+
+      const media = gsap.matchMedia();
+
+      media.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        ({ conditions }) => {
+          const reduceMotion = conditions?.reduceMotion ?? false;
+          const select = gsap.utils.selector(testimonialRef);
+          const activeImage = select('[data-testimonial-panel="active-image"]');
+          const activeCopy = select('[data-testimonial-panel="active-copy"]');
+          const preview = select('[data-testimonial-panel="preview"]');
+          const controls = select("[data-testimonial-controls]");
+          const progressFill = select("[data-testimonial-progress-fill]");
+
+          if (reduceMotion) {
+            if (progressFill.length) {
+              gsap.set(progressFill, {
+                scaleX: progress / 100,
+                transformOrigin: "left center",
+              });
+            }
+
+            return;
+          }
+
+          const entrance = gsap.timeline({
+            defaults: {
+              ease: "power2.out",
+            },
+            scrollTrigger: {
+              trigger: testimonial,
+              start: "top 80%",
+              once: true,
+              toggleActions: "play none none none",
+              invalidateOnRefresh: true,
+            },
+          });
+
+          if (activeImage.length) {
+            entrance.from(
+              activeImage,
+              { autoAlpha: 0, y: 18, duration: 0.75 },
+              0,
+            );
+          }
+
+          if (activeCopy.length) {
+            entrance.from(
+              activeCopy,
+              { autoAlpha: 0, y: 16, duration: 0.6 },
+              0.12,
+            );
+          }
+
+          if (preview.length) {
+            entrance.from(
+              preview,
+              { autoAlpha: 0, y: 12, duration: 0.55 },
+              0.24,
+            );
+          }
+
+          if (controls.length) {
+            entrance.from(
+              controls,
+              { autoAlpha: 0, y: 10, duration: 0.45 },
+              0.3,
+            );
+          }
+
+          if (progressFill.length) {
+            gsap.set(progressFill, {
+              scaleX: progress / 100,
+              transformOrigin: "left center",
+            });
+          }
+        },
+        testimonialRef,
+      );
+
+      return () => media.revert();
+    },
+    { scope: testimonialRef },
+  );
+
+  useGSAP(
+    () => {
+      if (!hasRenderedVoiceRef.current) {
+        hasRenderedVoiceRef.current = true;
+        return;
+      }
+
+      const testimonial = testimonialRef.current;
+
+      if (!testimonial) {
+        return;
+      }
+
+      const media = gsap.matchMedia();
+
+      media.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        ({ conditions }) => {
+          const reduceMotion = conditions?.reduceMotion ?? false;
+          const select = gsap.utils.selector(testimonialRef);
+          const activeImage = select('[data-testimonial-panel="active-image"]');
+          const activeCopy = select('[data-testimonial-panel="active-copy"]');
+          const preview = select('[data-testimonial-panel="preview"]');
+          const progressFill = select("[data-testimonial-progress-fill]");
+
+          if (!activeImage.length || !activeCopy.length || !preview.length) {
+            return;
+          }
+
+          const nextProgress = progress / 100;
+
+          if (reduceMotion) {
+            gsap.set(
+              [...activeImage, ...activeCopy, ...preview],
+              { autoAlpha: 1, y: 0 },
+            );
+            if (progressFill.length) {
+              gsap.set(progressFill, {
+                scaleX: nextProgress,
+                transformOrigin: "left center",
+              });
+            }
+
+            return;
+          }
+
+          const transition = gsap.timeline({
+            defaults: {
+              ease: "power2.inOut",
+            },
+          });
+
+          transition.fromTo(
+            activeImage,
+            { autoAlpha: 0.82, y: 12 },
+            { autoAlpha: 1, y: 0, duration: 0.38, ease: "power2.out" },
+            0,
+          );
+          transition.fromTo(
+            activeCopy,
+            { autoAlpha: 0, y: 16 },
+            { autoAlpha: 1, y: 0, duration: 0.52 },
+            0.04,
+          );
+          transition.fromTo(
+            preview,
+            { autoAlpha: 0.78, y: 10 },
+            { autoAlpha: 1, y: 0, duration: 0.46, ease: "power2.out" },
+            0.12,
+          );
+
+          if (progressFill.length) {
+            transition.to(
+              progressFill,
+              {
+                scaleX: nextProgress,
+                transformOrigin: "left center",
+                duration: 0.48,
+              },
+              0,
+            );
+          }
+        },
+        testimonialRef,
+      );
+
+      return () => media.revert();
+    },
+    {
+      dependencies: [activeIndex],
+      revertOnUpdate: true,
+      scope: testimonialRef,
+    },
+  );
+
+  const showPrevious = () => {
+    setActiveIndex(
+      (currentIndex) =>
+        (currentIndex - 1 + testimonialVoices.length) %
+        testimonialVoices.length,
+    );
+  };
+
+  const showNext = () => {
+    setActiveIndex(
+      (currentIndex) => (currentIndex + 1) % testimonialVoices.length,
+    );
+  };
+
   return (
     <section
+      ref={testimonialRef}
       id="testimonials"
       data-section-id="testimonials"
       aria-labelledby="testimonial-title"
@@ -139,8 +424,9 @@ export function Testimonial() {
               className="relative h-[2px] flex-1 bg-[var(--color-ink-950)]"
             >
               <span
-                className="absolute left-0 top-0 h-full bg-[var(--accent-primary)] transition-[width] duration-500 ease-out"
-                style={{ width: `${progress}%` }}
+                data-testimonial-progress-fill
+                className="absolute left-0 top-0 h-full origin-left bg-[var(--accent-primary)]"
+                style={{ width: "100%" }}
               />
             </div>
             <button
@@ -228,7 +514,10 @@ export function Testimonial() {
           </div>
         </aside>
 
-        <div className="order-4 mt-6 flex items-center justify-between gap-4 lg:hidden">
+        <div
+          data-testimonial-controls
+          className="order-4 mt-6 flex items-center justify-between gap-4 lg:hidden"
+        >
           <button
             type="button"
             aria-label="Show previous client voice"
